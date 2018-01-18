@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.yaiba.timiup">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="net.yaiba.timiup.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="AddActivity"  android:label="@string/add_a_record" ></activity>
+        <activity android:name="EditActivity" android:label="@string/edit_a_record" ></activity>
+        <activity android:name="DetailActivity" android:label="@string/detail_a_record" ></activity>
+        <activity android:name="DataManagementActivity" android:label="@string/data_management" ></activity>
+    </application>
+
+</manifest>

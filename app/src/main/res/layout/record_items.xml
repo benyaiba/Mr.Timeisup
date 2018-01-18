@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/RelativeLayout01"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dip"
+    android:paddingRight="10dip">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:text="名称"
+            android:layout_height="wrap_content"
+            android:layout_width="155sp"
+            android:textSize="12sp"
+            android:id="@+id/good_name"  />
+
+        <TextView
+            android:text="剩余天数"
+            android:layout_height="wrap_content"
+            android:layout_width="50sp"
+            android:textSize="12sp"
+            android:gravity="center_vertical|right"
+            android:id="@+id/lave_days"  />
+
+        <TextView
+            android:text="到期日"
+            android:layout_height="wrap_content"
+            android:layout_width="70sp"
+            android:textSize="12sp"
+            android:gravity="center_vertical|right"
+            android:id="@+id/end_date"  />
+
+        <TextView
+            android:text="生命值hp"
+            android:layout_height="wrap_content"
+            android:layout_width="45sp"
+            android:textSize="12sp"
+            android:gravity="center_vertical|right"
+            android:id="@+id/hp"  />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

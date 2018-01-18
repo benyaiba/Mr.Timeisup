@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!-- 为了不让edittext组件获得焦点 -->
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="210dp"
+            android:layout_height="50dp"
+            android:hint="@string/record_list_search" />
+
+        <Button
+            android:id="@+id/go_add"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:textSize="17dp"
+            android:background="@drawable/btn_nor_down_green"
+            android:text="添加记录" />
+    </LinearLayout>
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical">
+
+            <!--标题-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+                <!--<TextView-->
+                <!--android:text="@string/info_rizi"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="70sp"-->
+                <!--android:textSize="15sp"-->
+                <!--android:textStyle="bold"/>-->
+
+                <TextView
+                    android:layout_width="155sp"
+                    android:layout_height="wrap_content"
+                    android:text="名称"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="50sp"
+                    android:layout_height="wrap_content"
+                    android:text="剩余"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:text="到期日"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="45sp"
+                    android:layout_height="wrap_content"
+                    android:text="HP"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
+                <!--<TextView-->
+                    <!--android:id="@+id/list_counts"-->
+                    <!--android:layout_width="210sp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginRight="30dp"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:gravity="center_vertical|right"-->
+                    <!--android:text="12"-->
+                    <!--android:textColor="@color/silver"/>-->
+
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/recordslist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+                                        android:orientation="vertical" 
+                                        android:layout_width="fill_parent" 
+                                        android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="想用日期" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:ems="10" />
+
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:onClick="getDate"
+                    android:text="@string/info_shezhishijian"
+                    android:textColor="@color/gray" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="吃的什么" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+                <EditText
+                    android:id="@+id/food_name"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="100"
+                    android:inputType="textMultiLine"
+                    android:ems="10" />
+
+                <Button
+                    android:id="@+id/food_name_frequent"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/gray"
+                    android:text="吃过.." />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:text="在哪吃的" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/eat_where"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="100"
+                    android:ems="10" />
+                <Button
+                    android:id="@+id/eat_where_frequent"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:textColor="@color/gray"
+                    android:text="去过.." />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="@string/info_beizhu" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <EditText
+                    android:id="@+id/remark"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:maxLength="500"
+                    android:inputType="textMultiLine" />
+                <Button
+                    android:id="@+id/add"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="2dp"
+                    android:text="保存" />
+
+            </LinearLayout>
+
+
+
+            <!--纯占位，没招了，要不按钮下边儿看不见了！-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:textSize="12sp"
+                android:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+  

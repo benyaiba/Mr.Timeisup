@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+         <LinearLayout
+             android:orientation="vertical"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:layout_margin="10dp"
+             android:scrollbars="vertical">
+
+            <TextView
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:text="@string/info_mingcheng" />
+             <EditText
+                 android:id="@+id/good_name"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:maxLength="100"
+                 android:inputType="textMultiLine"
+                 android:background="@drawable/edit_for_line_bg"
+                 android:ems="10" />
+
+
+
+             <TextView
+                 android:layout_width="280dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="5dp"
+                 android:textSize="12sp"
+                 android:text="生产日" />
+
+             <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                 android:weightSum="1">
+
+                 <EditText
+                     android:id="@+id/product_date"
+                     android:layout_width="220dp"
+                     android:layout_height="wrap_content"
+                     android:maxLength="30"
+                     android:background="@drawable/edit_for_line_bg"
+                     android:ems="10" />
+
+                 <Button
+                     android:id="@+id/bn_product_date"
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:padding="0dp"
+                     android:text="选择生产日期"
+                     android:textSize="13sp"
+                     android:textColor="@color/gray" />
+
+             </LinearLayout>
+
+
+
+
+
+             <TextView
+                 android:layout_width="280dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="5dp"
+                 android:textSize="12sp"
+                 android:text="到期日" />
+             <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:weightSum="1">
+
+                 <EditText
+                     android:id="@+id/end_date"
+                     android:layout_width="220dp"
+                     android:layout_height="wrap_content"
+                     android:maxLength="30"
+                     android:background="@drawable/edit_for_line_bg"
+                     android:ems="10" />
+
+                 <Button
+                     android:id="@+id/bn_end_date"
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:text="选择到期日期"
+                     android:padding="0dp"
+                     android:textSize="13sp"
+                     android:textColor="@color/gray" />
+             </LinearLayout>
+
+
+
+
+
+
+
+             <TextView
+                 android:layout_width="280dp"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="5dp"
+                 android:textSize="12sp"
+                 android:text="购买日" />
+             <LinearLayout
+                 android:orientation="horizontal"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:weightSum="1">
+
+                 <EditText
+                     android:id="@+id/buy_date"
+                     android:layout_width="220dp"
+                     android:layout_height="wrap_content"
+                     android:maxLength="30"
+                     android:background="@drawable/edit_for_line_bg"
+                     android:ems="10" />
+
+                 <Button
+                     android:id="@+id/bn_buy_date"
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:padding="0dp"
+                     android:text="选择购买日期"
+                     android:textSize="13sp"
+                     android:textColor="@color/gray" />
+             </LinearLayout>
+
+
+
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:text="@string/info_beizhu" />
+
+            <EditText
+                    android:id="@+id/remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLength="500"
+                    android:background="@drawable/edit_for_line_bg"
+                    android:ems="10" />
+             <Button
+                 android:id="@+id/add"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="right|center_vertical"
+                 android:layout_margin="5dip"
+                 android:layout_marginTop="2dip"
+                 android:text="保存"
+                 android:background="@drawable/btn_nor_down"
+                 android:textSize="22sp" />
+
+
+             <!--纯占位，没招了，要不按钮下边儿看不见了！-->
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="10dp"
+                 android:textSize="12sp"
+                 android:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+  

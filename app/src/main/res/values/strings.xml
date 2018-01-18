@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Mr.Timiup</string>
+
+
+    <string name="info_mingcheng">名称</string>
+    <string name="info_leibie">类别</string>
+    <string name="info_shengchanriqi">生产日</string>
+    <string name="info_baozhiqi">到期日</string>
+    <string name="info_goumairi">购买日</string>
+    <string name="info_beizhu">备注</string>
+    <string name="info_lururiqi">录入日</string>
+
+    <string name="info_shezhishijian">选择</string>
+    <string name="record_list_search">查找&#8230;</string>
+
+    <string name="add_a_record">添加一条记录</string>
+    <string name="edit_a_record">正在编辑</string>
+    <string name="detail_a_record">记录详情</string>
+    <string name="data_management">备份与恢复</string>
+    <string name="login_p_change">修改登录密码</string>
+
+    <string name="menu_inport_export">备份与恢复</string>
+    <string name="menu_useEncode">使用加密</string>
+    <string name="menu_change_login_password">修改登录密码</string>
+    <string name="menu_whatupdate">更新说明</string>
+    <string name="menu_checkupdate">检查更新</string>
+    <string name="menu_support">技术支持</string>
+    <string name="menu_about">关于Timiup</string>
+
+    <string name="update_already_latest">已经是最新版本</string>
+    <string name="update_new_seg1">发现新版本，版本号：</string>
+    <string name="update_new_seg2">\n正在下载更新</string>
+    <string name="update_new_seg3">\n正在下载更新</string>
+    <string name="update_error">更新出错</string>
+
+    <string name="data_bakup">数据备份</string>
+    <string name="data_bakup_description">数据将以文件形式存储在您的设备中</string>
+    <string name="data_bakup_description_dir">/timiup/</string>
+    <string name="data_recover">数据恢复</string>
+    <string name="data_recover_description">程序会读取指定目录中的备份文件</string>
+    <string name="data_mess_import">批量导入</string>
+    <string name="data_mess_import_description">避免初期手工录入的繁琐，本程序支持批量导入账户信息</string>
+    <string name="data_mess_import_description_dir">/timiup/timiupres_mass.xml\n本文件格式参考导出文件，密码部分填写明文，程序会自动识别并加密导入</string>
+    <string name="menu_warming_have_unencode_file">警告：检测到目录中包含未加密的备份文件\n为了安全起见请备份后删除</string>
+
+    <string name="what_updated">
+        0.0.1.0\n基础功能开发
+    </string>
+    <string name="partners">\@石头大风吹</string>
+    <string name="about_app">
+        库存有效期管理，帮助你在有效期临近时提醒你，使用。
+        \n\n问题反馈可访问以下地址
+        \nYaiba.net</string>
+
+    <string name="version_unknown">未知版本</string>
+</resources>

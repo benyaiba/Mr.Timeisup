@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+                                        android:orientation="vertical" 
+                                        android:layout_width="fill_parent" 
+                                        android:layout_height="fill_parent">
+
+	<!--backup区域开始-->
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="125dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="10dp"
+		android:weightSum="1">
+
+		<!--左右布局，依次是文字、右按钮开始-->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="110dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="10dp"
+			android:weightSum="1">
+
+
+
+			<!--上下布局，左侧文字开始-->
+			<LinearLayout android:orientation="vertical"
+					android:layout_width="295dp"
+					android:layout_height="70dp"
+					android:layout_marginLeft="5dp"
+					android:layout_marginRight="0dp"
+					android:weightSum="1">
+
+				<TextView	android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_bakup"
+                    android:textSize="22sp"
+                    android:textStyle="normal|bold"
+					android:id="@+id/textView" />
+
+				<TextView	android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="18sp"
+						android:text="@string/data_bakup_description" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_bakup_description_dir"
+					android:textStyle="normal|italic"
+					android:textColor="@color/gray" />
+				</LinearLayout>
+			<!--上下布局，右侧文字结束-->
+
+			<Button android:id="@+id/data_bakup"
+				android:layout_marginTop="10dp"
+				android:layout_width="wrap_content"
+				android:layout_height="80dp"
+				android:layout_marginLeft="0dp"
+				android:textSize="24sp"
+				android:text="备份"/>
+
+		</LinearLayout>
+		<!--左右布局，依次是按钮、右侧文字结束-->
+
+		<!--backup区域最下面的横线-->
+		<View android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:background="@color/darkgrey" />
+
+	</LinearLayout>
+	<!--backup区域结束-->
+
+
+
+	<!--recover区域开始-->
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="125dp"
+		android:layout_marginLeft="2dp"
+		android:layout_marginRight="2dp"
+		android:layout_marginTop="10dp"
+		android:weightSum="1">
+
+		<!--左右布局，依次是按钮、右侧文字开始-->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="110dp"
+			android:layout_marginLeft="2dp"
+			android:layout_marginRight="2dp"
+			android:layout_marginTop="10dp"
+			android:weightSum="1">
+
+
+
+			<!--上下布局，右侧文字开始-->
+			<LinearLayout android:orientation="vertical"
+				android:layout_width="295dp"
+				android:layout_height="100dp"
+				android:layout_marginLeft="5dp"
+				android:layout_marginRight="0dp"
+				android:weightSum="1">
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_recover"
+					android:textSize="22sp"
+					android:textStyle="normal|bold" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="18sp"
+					android:text="@string/data_recover_description" />
+
+				<TextView	android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/data_bakup_description_dir"
+					android:textStyle="normal|italic"
+					android:textColor="@color/gray" />
+			</LinearLayout>
+			<!--上下布局，右侧文字结束-->
+
+			<Button android:id="@+id/data_recover"
+				android:layout_marginTop="10dp"
+				android:layout_width="wrap_content"
+				android:layout_height="80dp"
+				android:layout_marginLeft="0dp"
+				android:textSize="24sp"
+				android:text="恢复" />
+
+
+		</LinearLayout>
+		<!--左右布局，依次是按钮、右侧文字结束-->
+
+		<!--recover区域最下面的横线-->
+		<View android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:background="@color/darkgrey" />
+
+	</LinearLayout>
+	<!--recover区域结束-->
+
+
+<!--注释掉区域暂未开启使用-->
+<!--
+	<FrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="50dp" >
+
+		<Button
+			android:id="@+id/back"
+			android:layout_gravity="left|center_vertical"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
+			android:layout_marginLeft="10dp"
+			android:background="@drawable/home_01" />
+			
+	</FrameLayout>
+-->
+
+
+	<TextView	android:id="@+id/warmingHaveUnencodeFile"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="0dp"
+		android:layout_marginTop="40dp"
+		android:text=""
+		android:weightSum="1"
+		android:textSize="14sp"
+		android:textStyle="normal|bold" />
+
+</LinearLayout>
+  

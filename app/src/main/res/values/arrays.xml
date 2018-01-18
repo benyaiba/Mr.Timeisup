@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--0/1-->
+  <string-array name="status">
+    <item>未使用</item>
+    <item>已使用</item>
+  </string-array>
+</resources>
