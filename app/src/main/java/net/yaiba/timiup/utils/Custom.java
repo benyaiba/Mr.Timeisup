@@ -366,6 +366,16 @@ public class Custom {
         return df.format(new Date());
     }
 
-
+    public static boolean isValidDate(String str) {
+        boolean convertSuccess=true;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            format.setLenient(false);
+            format.parse(str);
+        } catch (ParseException e) {
+            convertSuccess=false;
+        }
+        return convertSuccess;
+    }
 
 }

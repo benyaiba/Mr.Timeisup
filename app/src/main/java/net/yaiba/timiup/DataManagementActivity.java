@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.util.Xml;
 import android.view.KeyEvent;
 import android.view.View;
@@ -37,8 +40,14 @@ public class DataManagementActivity extends Activity {
 	private int RECORD_ID = 0;
 	private int selectBakupFileIndex = 0;
 	private String[] bakFileArray ;
-	private String FILE_DIR_NAME = "eat";
+	private String FILE_DIR_NAME = "timiup";
 	private String fileNameSuff = ".xml";
+
+	//检测是否有写的权限用
+	private static final int REQUEST_EXTERNAL_STORAGE = 1;
+	private static String[] PERMISSIONS_STORAGE = {
+			"android.permission.READ_EXTERNAL_STORAGE",
+			"android.permission.WRITE_EXTERNAL_STORAGE" };
 
 	
 	@Override
@@ -46,6 +55,9 @@ public class DataManagementActivity extends Activity {
 
 		TimiUpDB = new TimiUpDB(this);
 		super.onCreate(savedInstanceState);
+
+		//检测是否有写的权限用
+		verifyStoragePermissions(DataManagementActivity.this);
 
 
 		//判断文件名中是否包含20170216020803!!!!!.xml 这种文件，如果目录中包含这种文件，将在画面最下方以红色文字提示。
@@ -55,22 +67,7 @@ public class DataManagementActivity extends Activity {
 
 		setContentView(R.layout.data_management);
 
-		// 注释掉区域暂未开启使用
-//		Button bn_back = (Button)findViewById(R.id.back);
-//		bn_back.setOnClickListener(new OnClickListener(){
-//			   public void  onClick(View v)
-//			   {
-//					   Intent mainIntent = new Intent(DataManagementActivity.this,MainActivity.class);
-//					   startActivity(mainIntent);
-//					   overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-//					   setResult(RESULT_OK, mainIntent);
-//					   finish();
-//			   }
-//			  });
 
-
-
-		
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);
 		bn_data_bakup.setOnClickListener(new OnClickListener(){
@@ -176,9 +173,8 @@ public class DataManagementActivity extends Activity {
 	@SuppressWarnings("resource")
 	@SuppressLint("SimpleDateFormat")
 	public void dataBakup(){
-		//Toast.makeText(this, "他很懒，备份程序还没做好", Toast.LENGTH_SHORT).show();
 		TimiUpDB = new TimiUpDB(this);
-		mCursor = TimiUpDB.getAllForBakup("create_time desc");
+		mCursor = TimiUpDB.getAllForBakup("id asc");
 
 		//检查目录并确定生成目录结构
 		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
@@ -255,12 +251,13 @@ public class DataManagementActivity extends Activity {
  	       if(mCursor.moveToFirst()) {
 		        while(!mCursor.isAfterLast()) {
 					serializer.startTag("", "record");
-					serializer.attribute("", "id", mCursor.getString(0));
-					serializer.attribute("", "food_name", mCursor.getString(1));
-					serializer.attribute("", "eat_time", mCursor.getString(2));
-					serializer.attribute("", "eat_where", mCursor.getString(3));
-					serializer.attribute("", "remark", mCursor.getString(4));
-					serializer.attribute("", "create_time", mCursor.getString(5));
+					serializer.attribute("", "id", mCursor.getString(mCursor.getColumnIndex("id")));
+					serializer.attribute("", "good_name", mCursor.getString(mCursor.getColumnIndex("good_name")));
+					serializer.attribute("", "product_date", mCursor.getString(mCursor.getColumnIndex("product_date")));
+					serializer.attribute("", "end_date", mCursor.getString(mCursor.getColumnIndex("end_date")));
+					serializer.attribute("", "buy_date", mCursor.getString(mCursor.getColumnIndex("buy_date")));
+					serializer.attribute("", "status", mCursor.getString(mCursor.getColumnIndex("status")));
+					serializer.attribute("", "remark", mCursor.getString(mCursor.getColumnIndex("remark")));
 					serializer.endTag("", "record");
 
 		            mCursor.moveToNext();
@@ -296,6 +293,7 @@ public class DataManagementActivity extends Activity {
 				
 				if(f.exists()){
 					if(recoverType.equals("normal")){
+						Log.v("v_debug","1");
 						TimiUpDB.deleteAll();
 					}
 					
@@ -303,32 +301,38 @@ public class DataManagementActivity extends Activity {
 		               StringBuilder sb = new StringBuilder("");
 		               XmlPullParser xrp = Xml.newPullParser();
 		               FileInputStream fin = new FileInputStream(f);
-		               xrp.setInput(fin, "UTF-8");  
+		               xrp.setInput(fin, "UTF-8");
+					Log.v("v_debug","2");
 		                while (xrp.getEventType() != XmlPullParser.END_DOCUMENT) {
+							Log.v("v_debug","3");
 		                         if (xrp.getEventType() == XmlPullParser.START_TAG) {
+									 Log.v("v_debug","4");
 		                              String tagName = xrp.getName();
-		                              if(tagName.equals("record")){   
+		                              if(tagName.equals("record")){
+										  Log.v("v_debug","5");
 		                                  counter++;   
 		                                  sb.append("第"+counter+"条信息："+"\n");
 		                                  //sb.append(xrp.getAttributeValue(0)+"\n"); 
-		                                  String food_name = xrp.getAttributeValue(1);
-		                                  String eat_time = xrp.getAttributeValue(2);
-		                                  String eat_where = xrp.getAttributeValue(3);
-		                                  String remark = xrp.getAttributeValue(4);
-										  String create_time = xrp.getAttributeValue(5);
-		                                  if(!food_name.isEmpty() && !eat_time.isEmpty() && !create_time.isEmpty() ){
-		                                	  if(remark.equals(null)){
-		                                		  remark="";
-		                                	  }
-											  TimiUpDB.insert(food_name, food_name,food_name, eat_time, eat_where, remark);
-		                                  }
+		                                  String good_name = xrp.getAttributeValue(1);
+		                                  String product_date = xrp.getAttributeValue(2);
+		                                  String end_date = xrp.getAttributeValue(3);
+		                                  String buy_date = xrp.getAttributeValue(4);
+										  String status = xrp.getAttributeValue(5);
+										  String remark = xrp.getAttributeValue(6);
+										  if(remark.equals(null)){
+		                                	remark="";
+										  }
+										  Log.v("v_debug","6");
+										  TimiUpDB.insert(good_name, product_date,end_date, buy_date, status, remark);
+
 		                              }   
 		                         } else if (xrp.getEventType() == XmlPullParser.END_TAG) {
 		                         } else if (xrp.getEventType() == XmlPullParser.TEXT) {
 		                         }    
 		                         xrp.next();  
-		                    }   
-		                
+		                    }
+
+					Log.v("v_debug","7");
 		                if(recoverType.equals("normal")){
 		                	returnString = counter +"条数据已恢复";
 						}
@@ -366,8 +370,24 @@ public class DataManagementActivity extends Activity {
  			isXMLFile = false;
  		 }
  		 return isXMLFile;
- 	} 
- 	
+ 	}
+
+
+	//检测是否有写的权限用
+	public static void verifyStoragePermissions(Activity activity) {
+
+		try {
+			//检测是否有写的权限
+			int permission = ActivityCompat.checkSelfPermission(activity,
+					"android.permission.WRITE_EXTERNAL_STORAGE");
+			if (permission != PackageManager.PERMISSION_GRANTED) {
+				// 没有写的权限，去申请写的权限，会弹出对话框
+				ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 }

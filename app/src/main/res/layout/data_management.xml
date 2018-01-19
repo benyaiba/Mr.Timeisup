@@ -26,7 +26,7 @@
 
 			<!--上下布局，左侧文字开始-->
 			<LinearLayout android:orientation="vertical"
-					android:layout_width="295dp"
+					android:layout_width="275dp"
 					android:layout_height="70dp"
 					android:layout_marginLeft="5dp"
 					android:layout_marginRight="0dp"
@@ -39,10 +39,11 @@
                     android:textStyle="normal|bold"
 					android:id="@+id/textView" />
 
-				<TextView	android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textSize="18sp"
-						android:text="@string/data_bakup_description" />
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="18sp"
+					android:text="@string/data_bakup_description" />
 
 				<TextView	android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
 				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
 				android:textSize="24sp"
+				android:background="@drawable/btn_nor_down_green"
 				android:text="备份"/>
 
 		</LinearLayout>
@@ -97,7 +99,7 @@
 
 			<!--上下布局，右侧文字开始-->
 			<LinearLayout android:orientation="vertical"
-				android:layout_width="295dp"
+				android:layout_width="275dp"
 				android:layout_height="100dp"
 				android:layout_marginLeft="5dp"
 				android:layout_marginRight="0dp"
@@ -128,6 +130,7 @@
 				android:layout_height="80dp"
 				android:layout_marginLeft="0dp"
 				android:textSize="24sp"
+				android:background="@drawable/btn_nor_down_green"
 				android:text="恢复" />
 
 

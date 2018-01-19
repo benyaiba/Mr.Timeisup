@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import net.yaiba.timiup.db.TimiUpDB;
 
+import java.text.ParseException;
+
 import static net.yaiba.timiup.utils.Custom.*;
 
 
@@ -28,6 +30,8 @@ public class DetailActivity extends Activity {
 	private TextView ProductDate;
 	private TextView EndDate;
 	private TextView BuyDate;
+	private TextView LaveDays;
+	private TextView HP;
 	private TextView Status;
 	private TextView Remark;
 
@@ -104,10 +108,12 @@ public class DetailActivity extends Activity {
 		ProductDate = (TextView) findViewById(R.id.product_date);
 		EndDate = (TextView) findViewById(R.id.end_date);
 		BuyDate = (TextView) findViewById(R.id.buy_date);
+		LaveDays = (TextView) findViewById(R.id.lave_days);
+		HP = (TextView) findViewById(R.id.hp);
 		Status = (TextView) findViewById(R.id.status);
 		Remark = (TextView)findViewById(R.id.remark);
 
-
+		String id = mCursor.getString(mCursor.getColumnIndex("id"));
 		String goodName = mCursor.getString(mCursor.getColumnIndex("good_name"));
 		String productDate = mCursor.getString(mCursor.getColumnIndex("product_date"));
 		String endDate = mCursor.getString(mCursor.getColumnIndex("end_date"));
@@ -115,10 +121,38 @@ public class DetailActivity extends Activity {
 		String status = mCursor.getString(mCursor.getColumnIndex("status"));
 		String remark = mCursor.getString(mCursor.getColumnIndex("remark"));
 
+		Log.v("v_debug_detail_init",id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status+"/"+remark);
+
+
+		String  laveDays = "0";//剩余天数，， _剩余天数=今日-到期日 的天数
+		double laveDaysDoub = 0;
+		try {
+			laveDaysDoub = getDiffDays(getStringToDate(getNowStringDate()),getStringToDate(endDate));
+			laveDays = Double.toString(laveDaysDoub).split("\\.")[0];
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		String hp = "";//HP,表示商品的生命周期百分比，， _HP =（剩余天数/（生产日期~到期日的天数））x100
+		try {
+			double dhp = 0;
+			if( "0".equals(laveDays)){
+				hp = "-";
+			} else {
+				dhp = laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))*100;
+				hp = Double.toString(dhp).split("\\.")[0];
+			}
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		GoodName.setText(mCursor.getString(mCursor.getColumnIndex("good_name")));
 		ProductDate.setText(mCursor.getString(mCursor.getColumnIndex("product_date")));
 		EndDate.setText(mCursor.getString(mCursor.getColumnIndex("end_date")));
 		BuyDate.setText(mCursor.getString(mCursor.getColumnIndex("buy_date")));
+		LaveDays.setText(laveDays+"天");
+		HP.setText(hp+"%");
 		Status.setText(transStatus(mCursor.getString(mCursor.getColumnIndex("status"))));
 		Remark.setText(mCursor.getString(mCursor.getColumnIndex("remark")));
 

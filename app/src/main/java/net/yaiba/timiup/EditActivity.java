@@ -15,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import net.yaiba.timiup.db.TimiUpDB;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -30,35 +33,29 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static net.yaiba.timiup.utils.Custom.isValidDate;
+
 
 public class EditActivity extends Activity {
 	private TimiUpDB TimiUpDB;
 	private Cursor mCursor;
-	private EditText FoodName;
-	private Spinner EatTime;
-	private EditText CreateTime;
-	private EditText EatWhere;
+
+	private EditText GoodName;
+	private EditText ProductDate;
+	private EditText EndDate;
+	private EditText BuyDate;
 	private EditText Remark;
+	private RadioGroup StatusGroup;
 
-	private TextView tv_qh;
-	private TextView tv_qb;
-
-	private EditText showDate = null;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
 
 	private int RECORD_ID = 0;
 
-	private final static int DIALOG=1;
-	boolean[] foodNameClickFlags=null;//初始复选情况
-	String[] foodNameitems=null;
-	String foodNameSelectedResults = "";
+	private String statusValue = "0";
 
-	boolean[] eatWhereClickFlags=null;//初始复选情况
-	String[] eatWhereitems=null;
-	String eatWhereSelectedResults = "";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,6 +65,48 @@ public class EditActivity extends Activity {
 		RECORD_ID = this.getIntent().getIntExtra("INT", RECORD_ID);
 
 		setUpViews();
+
+		Button bn_product_date = (Button)findViewById(R.id.bn_product_date);
+		bn_product_date.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				getDate(ProductDate);
+			}
+		});
+
+		Button bn_end_date = (Button)findViewById(R.id.bn_end_date);
+		bn_end_date.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				getDate(EndDate);
+			}
+		});
+
+
+		Button bn_buy_date = (Button)findViewById(R.id.bn_buy_date);
+		bn_buy_date.setOnClickListener(new OnClickListener(){
+			public void  onClick(View v)
+			{
+				getDate(BuyDate);
+			}
+		});
+
+		StatusGroup = (RadioGroup) findViewById(R.id.ra_status_group);
+	    StatusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+					case R.id.ra_unuse:
+						statusValue = "0";
+						break;
+					case R.id.ra_used:
+						statusValue = "1";
+						break;
+				}
+			}
+		});
+
+
 
 		Button bn_add = (Button) findViewById(R.id.add);
 		bn_add.setOnClickListener(new OnClickListener() {
@@ -82,300 +121,50 @@ public class EditActivity extends Activity {
 			}
 		});
 
-		EatWhere = (EditText)findViewById(R.id.eat_where);
 
-		Button bt_food_name_frequent = (Button) findViewById(R.id.food_name_frequent);
-		bt_food_name_frequent.setOnClickListener(new View.OnClickListener() {
-			@SuppressWarnings("deprecation")
-			public void onClick(View v) {
-				// 显示对话框
-				showDialog(1);
-			}
-		});
-
-		Button bt_eat_where_frequent = (Button) findViewById(R.id.eat_where_frequent);
-		bt_eat_where_frequent.setOnClickListener(new View.OnClickListener() {
-			@SuppressWarnings("deprecation")
-			public void onClick(View v) {
-				// 显示对话框
-				showDialog(2);
-			}
-		});
 
 
 
 	}
 
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-			case 1:
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("我吃过以下食品...");
-
-				Map<String, Integer> foodsStringMap = new HashMap<String, Integer>();
-				TimiUpDB = new TimiUpDB(EditActivity.this);
-				mCursor = TimiUpDB.getAllGoodName();
-				for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {
-					String foodName = mCursor.getString(mCursor.getColumnIndex("food_name"));
-					//Log.v("debug",foodName);
-
-					foodName = foodName.replaceAll(" ","");//替换空格
-					foodName = foodName.replaceAll("　","");//替换空格
-					foodName = foodName.replaceAll("，",",");//全角逗号替换成半角逗号
-					foodName = foodName.replaceAll("[',']+", ",");//将一个或多个半角逗号变成一个半角逗号
-					String[] foodNamesTmp = foodName.split(",");
-
-					for (int i = 0; i < foodNamesTmp.length; i++) {
-						foodName = foodNamesTmp[i];
-						if(foodsStringMap.containsKey(foodName)){
-							foodsStringMap.put(foodName, foodsStringMap.get(foodName)+1);
-						} else {
-							foodsStringMap.put(foodName, 1);
-						}
-					}
-				}
-
-				List<Map.Entry<String, Integer>> foodInfosMap =	new ArrayList<Map.Entry<String, Integer>>(foodsStringMap.entrySet());
-
-				//对map排序
-				Collections.sort(foodInfosMap, new Comparator<Map.Entry<String, Integer>>() {
-					public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-						//升序，按照名称升序排序
-						//return (o1.getKey()).compareTo(o2.getKey());
-						//降序，按照使用次数降序排序
-						//return (o2.getValue()).compareTo(o1.getValue());
-						String name1=o1.getKey();
-						String name2=o2.getKey();
-						Collator instance = Collator.getInstance(Locale.CHINA);
-						return instance.compare(name1, name2);
-
-
-					}
-				});
-
-				//每次点击时清空选择项
-				foodNameClickFlags=null;
-				foodNameSelectedResults = "";
-
-				if(!foodInfosMap.equals(null)){
-					foodNameitems = new String[foodInfosMap.size()];
-					foodNameClickFlags = new boolean [foodInfosMap.size()];
-				}
-
-				//Log.v("debug","=====map info===sort===");
-				int foodNameIndex = 0;
-				for(Map.Entry<String,Integer> mapping:foodInfosMap){
-					//Log.v("debug",mapping.getKey()+":"+mapping.getValue().toString());
-					if(mapping.getValue()>=5){
-						foodNameitems[foodNameIndex] = mapping.getKey()+" ("+mapping.getValue()+"次)";
-					} else {
-						foodNameitems[foodNameIndex] = mapping.getKey();
-					}
-
-					foodNameClickFlags[foodNameIndex] = false;//设置默认选中状态
-
-					String fn = FoodName.getText().toString();
-					foodNameSelectedResults = fn;
-
-					fn = fn.replaceAll(" ","");//替换空格
-					fn = fn.replaceAll("　","");//替换空格
-					fn = fn.replaceAll("，",",");//全角逗号替换成半角逗号
-					fn = fn.replaceAll("[',']+", ",");//将一个或多个半角逗号变成一个半角逗号
-					String[] foodNamesTmp = fn.split(",");
-
-
-					for(int i=0;i<foodNamesTmp.length;i++){
-						if(foodNamesTmp[i].equals(mapping.getKey())){
-							foodNameClickFlags[foodNameIndex] = true;
-							break;
-						}
-					}
-
-
-					//Log.v("debug","view->"+mapping.getKey()+":"+mapping.getValue().toString());
-					foodNameIndex++;
-				}
-				//Log.v("debug","=====items===");
-				//Log.v("debug",foodNameitems.length+"");
-				builder.setMultiChoiceItems(foodNameitems, foodNameClickFlags, new DialogInterface.OnMultiChoiceClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-						foodNameClickFlags[which]=isChecked;
-						foodNameSelectedResults = "";
-						for (int i = 0; i < foodNameClickFlags.length; i++) {
-							if(foodNameClickFlags[i])
-							{
-								String n = foodNameitems[i];
-								String[] m = n.split(" ");
-								foodNameSelectedResults=foodNameSelectedResults + m[0]+",";
-							}
-						}
-						//去掉结尾的逗号
-						if(!foodNameSelectedResults.isEmpty()){
-							foodNameSelectedResults = foodNameSelectedResults.substring(0,foodNameSelectedResults.length()-1);
-						}
-
-						//Log.v("debug","我点了！which:"+which+",name:"+foodNameitems[which]);
-					}
-				});
-				builder.setPositiveButton("就选这些（点击后，之前填写的将被清空）", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						//选择的食物名称赋值到前台文本框中
-						FoodName.setText(foodNameSelectedResults);
-					}
-				});
-				dialog = builder.create();
-				break;
-
-			case 2:
-				AlertDialog.Builder eatWhereBbuilder = new AlertDialog.Builder(this);
-				eatWhereBbuilder.setTitle("我去过以下地方...");
-
-				Map<String, Integer> whereStringMap = new HashMap<String, Integer>();
-				TimiUpDB = new TimiUpDB(EditActivity.this);
-				//mCursor = TimiUpDB.getAllEatWhere();
-				for(mCursor.moveToFirst();!mCursor.isAfterLast();mCursor.moveToNext()) {
-					String eatWhere = mCursor.getString(mCursor.getColumnIndex("eat_where"));
-					//Log.v("debug",foodName);
-
-					eatWhere = eatWhere.replaceAll(" ","");//替换空格
-					eatWhere = eatWhere.replaceAll("　","");//替换空格
-					eatWhere = eatWhere.replaceAll("，",",");//全角逗号替换成半角逗号
-					eatWhere = eatWhere.replaceAll("[',']+", ",");//将一个或多个半角逗号变成一个半角逗号
-					String[] foodNamesTmp = eatWhere.split(",");
-
-					for (int i = 0; i < foodNamesTmp.length; i++) {
-						eatWhere = foodNamesTmp[i];
-						if(!eatWhere.isEmpty()){
-							if(whereStringMap.containsKey(eatWhere)){
-								whereStringMap.put(eatWhere, whereStringMap.get(eatWhere)+1);
-							} else {
-								whereStringMap.put(eatWhere, 1);
-							}
-						}
-
-					}
-				}
-
-				List<Map.Entry<String, Integer>> eatWhereInfosMap =	new ArrayList<Map.Entry<String, Integer>>(whereStringMap.entrySet());
-
-				//对map排序
-				Collections.sort(eatWhereInfosMap, new Comparator<Map.Entry<String, Integer>>() {
-					public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-						//升序，按照名称升序排序
-						//return (o1.getKey()).compareTo(o2.getKey());
-						//降序，按照使用次数降序排序
-						//return (o2.getValue()).compareTo(o1.getValue());
-						String name1=o1.getKey();
-						String name2=o2.getKey();
-						Collator instance = Collator.getInstance(Locale.CHINA);
-						return instance.compare(name1, name2);
-
-
-					}
-				});
-
-				//每次点击时清空选择项
-				eatWhereClickFlags=null;
-
-				if(!eatWhereInfosMap.equals(null)){
-					eatWhereitems = new String[eatWhereInfosMap.size()];
-					eatWhereClickFlags = new boolean [eatWhereInfosMap.size()];
-				}
-
-				//Log.v("debug","=====map info===sort===");
-				int eatWhereIndex = 0;
-				for(Map.Entry<String,Integer> mapping:eatWhereInfosMap){
-					//Log.v("debug",mapping.getKey()+":"+mapping.getValue().toString());
-					if(mapping.getValue()>=5){
-						eatWhereitems[eatWhereIndex] = mapping.getKey()+" ("+mapping.getValue()+"次)";
-					} else {
-						eatWhereitems[eatWhereIndex] = mapping.getKey();
-					}
-
-					eatWhereClickFlags[eatWhereIndex] = false;//设置默认选中状态
-					//Log.v("debug","view->"+mapping.getKey()+":"+mapping.getValue().toString());
-
-                    String ew = EatWhere.getText().toString();
-
-                    foodNameSelectedResults = ew;
-                    ew = ew.replaceAll(" ","");//替换空格
-                    ew = ew.replaceAll("　","");//替换空格
-                    ew = ew.replaceAll("，",",");//全角逗号替换成半角逗号
-                    ew = ew.replaceAll("[',']+", ",");//将一个或多个半角逗号变成一个半角逗号
-                    String[] eatWhereTmp = ew.split(",");
-
-                    for(int i=0;i<eatWhereTmp.length;i++){
-                        if(eatWhereTmp[i].equals(mapping.getKey())){
-                            eatWhereClickFlags[eatWhereIndex] = true;
-                            break;
-                        }
-                    }
-
-					eatWhereIndex++;
-				}
-				//Log.v("debug","=====items===");
-				//Log.v("debug",foodNameitems.length+"");
-				eatWhereBbuilder.setMultiChoiceItems(eatWhereitems, eatWhereClickFlags, new DialogInterface.OnMultiChoiceClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-						eatWhereClickFlags[which]=isChecked;
-						eatWhereSelectedResults = "";
-						for (int i = 0; i < eatWhereClickFlags.length; i++) {
-							if(eatWhereClickFlags[i])
-							{
-								String n = eatWhereitems[i];
-								String[] m = n.split(" ");
-								eatWhereSelectedResults=eatWhereSelectedResults + m[0]+",";
-							}
-						}
-						//去掉结尾的逗号
-						if(!eatWhereSelectedResults.isEmpty()){
-							eatWhereSelectedResults = eatWhereSelectedResults.substring(0,eatWhereSelectedResults.length()-1);
-						}
-
-						//Log.v("debug","我点了！which:"+which+",name:"+foodNameitems[which]);
-					}
-				});
-				eatWhereBbuilder.setPositiveButton("就在这了！（点击后，之前填写的将被清空）", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						//选择的地点赋值到前台文本框中
-						EatWhere.setText(eatWhereSelectedResults);
-					}
-				});
-				dialog = eatWhereBbuilder.create();
-				break;
-
-			default:
-				break;
+	private void setDateTime(Boolean flag,EditText editText){
+		if(flag){
+			final Calendar c = Calendar.getInstance();
+			mYear = c.get(Calendar.YEAR);
+			mMonth = c.get(Calendar.MONTH);
+			mDay = c.get(Calendar.DAY_OF_MONTH);
 		}
-
-		return dialog;
+		editText.setText(new StringBuilder().append(mYear).append("-")
+				.append((mMonth+1) < 10 ? "0" + (mMonth+1) : (mMonth+1)).append("-")
+				.append((mDay < 10) ? "0" + mDay : mDay));
 	}
 
 
+	public void getDate(final EditText editText) {
 
+		String[] data = editText.getText().toString().split("-");
+		Log.v("v_debug_data",editText.getText().toString());
 
+		mYear = Integer.parseInt(data[0]);
+		mMonth = Integer.parseInt(data[1]);
+		mDay = Integer.parseInt(data[2]);
 
-	public void getDate(View v) {
+		Log.v("v_debug_mYear",mYear+"");
+		Log.v("v_debug_mMonth",mMonth+"");
+		Log.v("v_debug_mDay",mDay+"");
 
-		new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
+		new DatePickerDialog(this, DatePickerDialog.THEME_HOLO_LIGHT,new DatePickerDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				mYear = year;
+				EditActivity.this.mYear = year;
 				mMonth = monthOfYear;
 				mDay = dayOfMonth;
 
-				CreateTime.
-						setText(new StringBuilder().append(mYear).append("-")
-						.append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
-						.append((mDay < 10) ? "0" + mDay : mDay));
+				Log.v("v_debug_Year",year+"");
+				Log.v("v_debug_monthOfYear",monthOfYear+"");
+				Log.v("v_debug_dayOfMonth",dayOfMonth+"");
+
+				setDateTime(false, editText);
 			}
 		}, mYear, mMonth-1, mDay).show();
 	}
@@ -393,42 +182,58 @@ public class EditActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	
-	@SuppressWarnings("deprecation")
+
 	public Boolean update(){
-	
-		String foodname = FoodName.getText().toString().replace("\n","");
-		String eattime = EatTime.getSelectedItem().toString();
-		String eatwhere = EatWhere.getText().toString().replace("\n","");
-		String createTime = CreateTime.getText().toString().replace("\n","");
+
+		GoodName = (EditText)findViewById(R.id.good_name);
+		ProductDate = (EditText)findViewById(R.id.product_date);
+		EndDate = (EditText) findViewById(R.id.end_date);
+		BuyDate = (EditText) findViewById(R.id.buy_date);
+		Remark = (EditText)findViewById(R.id.remark);
+
+		String goodname = GoodName.getText().toString().replace("\n","");
+		String productdate = ProductDate.getText().toString().replace("\n","");
+		String enddate = EndDate.getText().toString().replace("\n","");
+		String buydate = BuyDate.getText().toString().replace("\n","");
 		String remark = Remark.getText().toString();
 
-		if (foodname.equals("")){
-			Toast.makeText(this, "[吃的啥]没填", Toast.LENGTH_SHORT).show();
+		if (goodname.equals("")){
+			Toast.makeText(this, "[名称]没填", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (goodname.length() >100){
+			Toast.makeText(this, "[名称]不能超过100个文字", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (productdate.equals("")){
+			Toast.makeText(this, "[生产日期]没填", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (!isValidDate(productdate)){
+			Toast.makeText(this, "[生产日期]无效", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
-		if (foodname.length() >100){
-			Toast.makeText(this, "[吃的啥]食物过多，不能超过100个文字", Toast.LENGTH_SHORT).show();
+		if (enddate.equals("")){
+			Toast.makeText(this, "[到期日]没填", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (!isValidDate(enddate)){
+			Toast.makeText(this, "[到期日]无效", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
-		if (eattime.equals("")){
-			Toast.makeText(this, "[饭点儿]没有选择，请选择", Toast.LENGTH_SHORT).show();
+		if (productdate.equals(enddate)){
+			Toast.makeText(this, "[生产日期][到期日]不能相同", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
-		if (eatwhere.length() >100){
-			Toast.makeText(this, "[享用地点]文字过多，不能超过100个文字", Toast.LENGTH_SHORT).show();
+		if (buydate.equals("")){
+			Toast.makeText(this, "[购买日期]没填", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-
-		if (createTime.length() > 14){
-			Toast.makeText(this, "[日期]长度不能超过14个文字，请检查格式是否正确", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (createTime.length() < 10){
-			Toast.makeText(this, "[日期]长度不能小于10个文字，请检查格式是否正确", Toast.LENGTH_SHORT).show();
+		if (!isValidDate(buydate)){
+			Toast.makeText(this, "[购买日期]无效", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
@@ -437,9 +242,8 @@ public class EditActivity extends Activity {
 			return false;
 		}
 
-
 		try {
-			TimiUpDB.update(RECORD_ID, foodname, eattime, eatwhere, remark ,createTime ,createTime);
+			TimiUpDB.update(RECORD_ID, goodname, productdate, enddate, buydate, statusValue, remark);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -447,35 +251,36 @@ public class EditActivity extends Activity {
 		Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT).show();
 		return true;
 	}
-	
+
 	public void setUpViews(){
 		TimiUpDB = new TimiUpDB(this);
 		mCursor = TimiUpDB.getRecordInfo(RECORD_ID);
 
-		FoodName = (EditText)findViewById(R.id.food_name);
+		GoodName = (EditText)findViewById(R.id.good_name);
+		ProductDate = (EditText) findViewById(R.id.product_date);
+		EndDate = (EditText) findViewById(R.id.end_date);
+		BuyDate = (EditText) findViewById(R.id.buy_date);
+		StatusGroup = (RadioGroup) findViewById(R.id.ra_status_group);
 
-		CreateTime = (EditText)findViewById(R.id.create_time);
-		EatWhere = (EditText)findViewById(R.id.eat_where);
 		Remark = (EditText)findViewById(R.id.remark);
 
-		FoodName.setText(mCursor.getString(1));
-		Log.v("debug","mCursor.getString(2):"+mCursor.getString(2));
-		Log.v("debug","getEatTimeIndex(mCursor.getString(2)):"+(mCursor.getString(2)));
-		CreateTime.setText(mCursor.getString(5));
-		EatWhere.setText(mCursor.getString(3));
-		Remark.setText(mCursor.getString(4));
+
+		GoodName.setText(mCursor.getString(mCursor.getColumnIndex("good_name")));
+		ProductDate.setText(mCursor.getString(mCursor.getColumnIndex("product_date")));
+		EndDate.setText(mCursor.getString(mCursor.getColumnIndex("end_date")));
+		BuyDate.setText(mCursor.getString(mCursor.getColumnIndex("buy_date")));
+
+		String status = mCursor.getString(mCursor.getColumnIndex("status"));
+		if("0".equals(status)){
+			StatusGroup.check(R.id.ra_unuse);
+		} else {
+			StatusGroup.check(R.id.ra_used);
+		}
+
+		Remark.setText(mCursor.getString(mCursor.getColumnIndex("remark")));
 
 
-		String[] data = mCursor.getString(5).split("-");
-        if(data.length==3){
-            mYear = Integer.parseInt(data[0]);
-            mMonth = Integer.parseInt(data[1]);
-            mDay = Integer.parseInt(data[2]);
-        } else {
-            mYear = 0;
-            mMonth = 0;
-            mDay = 0;
-        }
+
 
 	}
 }

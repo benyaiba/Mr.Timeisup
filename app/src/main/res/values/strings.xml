@@ -3,12 +3,11 @@
 
 
     <string name="info_mingcheng">名称</string>
-    <string name="info_leibie">类别</string>
     <string name="info_shengchanriqi">生产日</string>
     <string name="info_baozhiqi">到期日</string>
     <string name="info_goumairi">购买日</string>
     <string name="info_beizhu">备注</string>
-    <string name="info_lururiqi">录入日</string>
+    <string name="info_lururiqi">购买日</string>
 
     <string name="info_shezhishijian">选择</string>
     <string name="record_list_search">查找&#8230;</string>
@@ -34,17 +33,15 @@
     <string name="update_error">更新出错</string>
 
     <string name="data_bakup">数据备份</string>
-    <string name="data_bakup_description">数据将以文件形式存储在您的设备中</string>
+    <string name="data_bakup_description">以文件形式存储在您的设备中</string>
     <string name="data_bakup_description_dir">/timiup/</string>
     <string name="data_recover">数据恢复</string>
     <string name="data_recover_description">程序会读取指定目录中的备份文件</string>
-    <string name="data_mess_import">批量导入</string>
-    <string name="data_mess_import_description">避免初期手工录入的繁琐，本程序支持批量导入账户信息</string>
-    <string name="data_mess_import_description_dir">/timiup/timiupres_mass.xml\n本文件格式参考导出文件，密码部分填写明文，程序会自动识别并加密导入</string>
     <string name="menu_warming_have_unencode_file">警告：检测到目录中包含未加密的备份文件\n为了安全起见请备份后删除</string>
 
     <string name="what_updated">
-        0.0.1.0\n基础功能开发
+        0.0.2.0\n录入、编辑、删除、检索、数据管理功能
+        \n\n0.0.1.0\n一览列表显示
     </string>
     <string name="partners">\@石头大风吹</string>
     <string name="about_app">

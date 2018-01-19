@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import net.yaiba.timiup.data.ListViewData;
 import net.yaiba.timiup.db.TimiUpDB;
 import net.yaiba.timiup.utils.UpdateTask;
 
@@ -53,7 +54,19 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpViews("listInit",null);
+
+        // 当迁移当前页面时，判断检索框中是否有内容，如果有，恢复检索时下拉列表中的内容，并设置检索框中的文字。
+        final ListViewData app = (ListViewData)getApplication();
+        if("".equals(app.getQuickSearchText())){
+            setUpViews("listInit",null);
+        } else {
+            SearchInput = (EditText)findViewById(R.id.searchInput);
+            SearchInput.setText(app.getQuickSearchText());
+            setUpViews("search",app.getQuickSearchText());
+        }
+
+        //返回前设置前次的位置值
+        setRecordListPosition();
 
         Button bn_go_add = (Button)findViewById(R.id.go_add);
         bn_go_add.setOnClickListener(new View.OnClickListener(){
@@ -75,14 +88,17 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final ListViewData app = (ListViewData)getApplication();
                 if(SearchInput.getText().toString().trim().length()!=0){
                     try {
                         setUpViews("search",SearchInput.getText().toString().trim());
+                        app.setQuickSearchText(SearchInput.getText().toString().trim());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
                     setUpViews("listInit",null);
+                    app.setQuickSearchText("");
                 }
             }
 
@@ -118,6 +134,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 //                spinner_filter_eat_time = (Spinner)findViewById(R.id.filter_eat_time);
 //                mCursor = TimiUpDB.getForSearch(value,spinner_filter_create_time.getSelectedItem().toString(),spinner_filter_eat_time.getSelectedItem().toString());
 //            }
+
+            mCursor = TimiUpDB.getForSearchName(value);
+
         } else if("filter".equals(type)){
 //            spinner_filter_create_time = (Spinner)findViewById(R.id.filter_create_time);
 //            spinner_filter_eat_time = (Spinner)findViewById(R.id.filter_eat_time);
@@ -141,40 +160,25 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             String buyDate = mCursor.getString(mCursor.getColumnIndex("buy_date"));
             String status = mCursor.getString(mCursor.getColumnIndex("status"));
             Log.v("v_record"+id,id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status);
+
             String  laveDays = "0";//剩余天数，， _剩余天数=今日-到期日 的天数
             double laveDaysDoub = 0;
             try {
                 laveDaysDoub = getDiffDays(getStringToDate(getNowStringDate()),getStringToDate(endDate));
-                Log.v("v_laveDaysDoub",laveDaysDoub+"");
-                Log.v("v_Double.toString(laveD",Double.toString(laveDaysDoub));
-                Log.v("v_Double.toString(l.len",Double.toString(laveDaysDoub).split(".").length+"");
                 laveDays = Double.toString(laveDaysDoub).split("\\.")[0];
-                Log.v("v_laveDays",laveDays);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
             String hp = "";//HP,表示商品的生命周期百分比，， _HP =（剩余天数/（生产日期~到期日的天数））x100
             try {
-                Log.v("v_productDate",productDate);
-                Log.v("v_endDate",productDate);
-                Log.v("v_getDiffDays",getDiffDays(getStringToDate(productDate),getStringToDate(endDate))+"");
-
                 double dhp = 0;
                 if( "0".equals(laveDays)){
                     hp = "-";
                 } else {
                     dhp = laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))*100;
-
-                    Log.v("v_getDiffDays-",getDiffDays(getStringToDate(productDate),getStringToDate(endDate))+"");
-                    Log.v("v_laveDays/getDiffDays-",laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))+"");
-
-                    Log.v("v_dhp",dhp+"");
-                    hp = Double.toString(dhp).split("\\.")[0]+"%";
-                    Log.v("v_dhp",Double.toString(dhp));
+                    hp = Double.toString(dhp).split("\\.")[0];
                 }
-
-                Log.v("v_hp",hp+"");
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -185,7 +189,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             map.put("goodName", goodName);
             map.put("laveDays", laveDays+"天");
             map.put("endDate", endDate);
-            map.put("HP", hp);
+            map.put("HP", hp+"%");
 
 
 
@@ -222,13 +226,12 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //保存当前一览位置
-        //saveListViewPositionAndTop();
+        saveListViewPositionAndTop();
         //迁移到详细页面
 
         Intent mainIntent = new Intent(MainActivity.this,DetailActivity.class);
-        Log.v("v_debug","position:"+position);
-        Log.v("v_debug","long id:"+id);
-
+        mCursor.moveToPosition(position);
+        RECORD_ID = mCursor.getInt(0);
 
         Log.v("v_debug","RECORD_ID:"+RECORD_ID);
         mainIntent.putExtra("INT", RECORD_ID);
@@ -347,6 +350,22 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     }
 
 
+    //返回前设置前次的位置值
+    public void setRecordListPosition(){
+        ListViewData app = (ListViewData)getApplication();
+        RecordList.setSelectionFromTop(app.getFirstVisiblePosition(), app.getFirstVisiblePositionTop());
+    }
 
+    /**
+     * 保存当前页签listView的第一个可见的位置和top
+     */
+    private void saveListViewPositionAndTop() {
+
+        final ListViewData app = (ListViewData)getApplication();
+
+        app.setFirstVisiblePosition(RecordList.getFirstVisiblePosition());
+        View item = RecordList.getChildAt(0);
+        app.setFirstVisiblePositionTop((item == null) ? 0 : item.getTop());
+    }
 
 }

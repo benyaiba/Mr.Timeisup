@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static net.yaiba.timiup.utils.Custom.isValidDate;
 
 
 public class AddActivity extends Activity {
@@ -41,12 +42,6 @@ public class AddActivity extends Activity {
 		TimiUpDB = new TimiUpDB(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record_add);
-
-//		final Calendar c = Calendar.getInstance();
-//		mYear = c.get(Calendar.YEAR);
-//		mMonth = c.get(Calendar.MONTH);
-//		mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
 		GoodName = (EditText)findViewById(R.id.good_name);
 		ProductDate = (EditText) findViewById(R.id.product_date);
@@ -95,13 +90,7 @@ public class AddActivity extends Activity {
 			}
 		});
 
-
-
-
 	}
-
-
-
 
 
 
@@ -144,17 +133,7 @@ public class AddActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	public static boolean isValidDate(String str) {
-		boolean convertSuccess=true;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			format.setLenient(false);
-			format.parse(str);
-		} catch (ParseException e) {
-			convertSuccess=false;
-		}
-		return convertSuccess;
-	}
+
 	
 
 	protected Boolean add(){

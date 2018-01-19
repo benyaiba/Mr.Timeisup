@@ -23,7 +23,7 @@
                 android:text="名称" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/good_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
@@ -33,20 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="类别" />
-
-            <TextView
-                android:id="@+id/category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:paddingBottom="10dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="生产日" />
+                android:text="生产日期" />
 
             <TextView
                 android:id="@+id/product_date"
@@ -60,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="到期日" />
+                android:text="到期日期" />
 
             <TextView
                 android:id="@+id/end_date"
@@ -74,10 +61,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="购买日" />
+                android:text="购买日期" />
 
             <TextView
                 android:id="@+id/buy_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textIsSelectable="true"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="剩余天数" />
+
+            <TextView
+                android:id="@+id/lave_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textIsSelectable="true"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="生命值" />
+
+            <TextView
+                android:id="@+id/hp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
@@ -128,9 +143,16 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dip"
                 android:layout_marginTop="2dip"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/silver"
                 android:background="@drawable/btn_nor_down"
                 android:text="我要删除" />
+
+            <!--纯占位，没招了，要不按钮下边儿看不见了！-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"/>
 
         </LinearLayout>
     </ScrollView>

@@ -180,6 +180,28 @@ public class TimiUpDB extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+    public Cursor getForSearchName(String good_name_or_remark) {
+        String where = "";
+        String sql_namemark ="";
+        if (!good_name_or_remark.isEmpty()){
+            where = "("+GOOD_NAME + " LIKE '%" + good_name_or_remark + "%' or "  + REMARK + " LIKE '%" + good_name_or_remark + "%' " + ")";
+        } else {
+            where = "1=1";
+        }
+
+        String orderby = "id asc";
+
+        Log.v("debug",where);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(true,
+                TABLE_NAME,
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
+                where , null, null, null, orderby, null);
+        return cursor;
+    }
+
     public Cursor getAllGoodName() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(false,TABLE_NAME, new String[] {GOOD_NAME}, null, null, null, null, null ,null);
@@ -219,7 +241,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, null, null);
 
         //set ai=0
-        String where = GOOD_NAME+" = ?";
+        String where = "name = ?";
         String[] whereValue = { TABLE_NAME };
         ContentValues cv = new ContentValues();
         cv.put("seq", 0);
