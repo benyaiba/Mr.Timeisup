@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import net.yaiba.timiup.data.ListViewData;
 import net.yaiba.timiup.db.TimiUpDB;
+import net.yaiba.timiup.utils.SpecialAdapter;
 import net.yaiba.timiup.utils.UpdateTask;
 
 import java.text.ParseException;
@@ -123,7 +124,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     public void setUpViews(String type, String value){
         TimiUpDB = new TimiUpDB(this);
         if("listInit".equals(type)){
-            mCursor = TimiUpDB.getAll("id asc");
+            mCursor = TimiUpDB.getAll("id desc");
         } else if("search".equals(type)) {
 
 //            bn_filters = (Button)findViewById(R.id.filters);
@@ -190,19 +191,21 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             map.put("laveDays", laveDays+"天");
             map.put("endDate", endDate);
             map.put("HP", hp+"%");
-
+            map.put("status", status);
 
 
             map.put("productDate", productDate);
             map.put("buyDate", buyDate);
-            map.put("status", status);
+
 
             listItem.add(map);
         }
 
-        SimpleAdapter listItemAdapter = new SimpleAdapter(this,listItem,R.layout.record_items,
-                new String[] { "goodName","laveDays","endDate","HP"},
-                new int[] {R.id.good_name,R.id.lave_days,R.id.end_date,R.id.hp}
+
+        //listView 样式设置 重写SimpleAdapter
+        SpecialAdapter listItemAdapter = new SpecialAdapter(this,listItem,R.layout.record_items,
+                new String[] { "goodName","laveDays","endDate","HP","status"},
+                new int[] {R.id.good_name,R.id.lave_days,R.id.end_date,R.id.hp,R.id.status}
 
 
 
@@ -210,8 +213,11 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
 
 
+
+
         RecordList.setAdapter(listItemAdapter);
         RecordList.setOnItemClickListener(this);
+
 
 
         //TextView ListCount = (TextView)findViewById(R.id.list_counts);
@@ -220,6 +226,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 
 
     }
+
+
+
 
 
 

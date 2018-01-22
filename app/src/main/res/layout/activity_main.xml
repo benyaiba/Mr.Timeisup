@@ -91,6 +91,14 @@
                     android:gravity="center"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="10sp"
+                    android:layout_height="wrap_content"
+                    android:text="♥"
+                    android:textSize="8sp"
+                    android:gravity="center"
+                    android:textStyle="bold" />
+
                 <!--<TextView-->
                     <!--android:id="@+id/list_counts"-->
                     <!--android:layout_width="210sp"-->
