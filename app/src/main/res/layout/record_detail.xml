@@ -129,6 +129,16 @@
                 android:paddingBottom="10dp"/>
 
             <Button
+                android:id="@+id/go_status_used"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="5dip"
+                android:layout_marginTop="2dip"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_nor_down_green"
+                android:text="已经使用" />
+
+            <Button
                 android:id="@+id/go_edit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -144,8 +154,7 @@
                 android:layout_margin="5dip"
                 android:layout_marginTop="2dip"
                 android:layout_marginBottom="20dp"
-                android:textColor="@color/silver"
-                android:background="@drawable/btn_nor_down"
+                android:background="@drawable/btn_nor_down_grey"
                 android:text="我要删除" />
 
             <!--纯占位，没招了，要不按钮下边儿看不见了！-->

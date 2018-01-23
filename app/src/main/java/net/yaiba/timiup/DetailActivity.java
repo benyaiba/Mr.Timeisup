@@ -84,6 +84,33 @@ public class DetailActivity extends Activity {
 				builder.create().show();
 			}
 		});
+
+		Button bn_go_status_used = (Button)findViewById(R.id.go_status_used);
+		bn_go_status_used.setOnClickListener(new View.OnClickListener(){
+			public void  onClick(View v)
+			{
+				AlertDialog.Builder builder= new AlertDialog.Builder(DetailActivity.this);
+				builder.setIcon(android.R.drawable.ic_dialog_info);
+				builder.setTitle("确认");
+				builder.setMessage("确定这个东东已经使用了吗？");
+				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						update_status("1");
+						Intent mainIntent = new Intent(DetailActivity.this,MainActivity.class);
+						startActivity(mainIntent);
+						setResult(RESULT_OK, mainIntent);
+						finish();
+
+					}
+				});
+				builder.setNegativeButton("取消", null);
+				builder.create().show();
+			}
+		});
+
+
+
+
 	}
 	
 	@Override
@@ -121,7 +148,13 @@ public class DetailActivity extends Activity {
 		String status = mCursor.getString(mCursor.getColumnIndex("status"));
 		String remark = mCursor.getString(mCursor.getColumnIndex("remark"));
 
-		Log.v("v_debug_detail_init",id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status+"/"+remark);
+		//Log.v("v_debug_detail_init",id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status+"/"+remark);
+
+		// 当当前物品是已经使用的状态时，设置状态的按钮隐藏
+		if ("1".equals(status)){
+			Button bn_go_status_used = (Button)findViewById(R.id.go_status_used);
+			bn_go_status_used.setVisibility(View.GONE);
+		}
 
 
 		String  laveDays = "0";//剩余天数，， _剩余天数=今日-到期日 的天数
@@ -158,14 +191,24 @@ public class DetailActivity extends Activity {
 
 	}
 
-	public void delete(){
+	public void delete() {
 		if (RECORD_ID == 0) {
 			return;
 		}
 		TimiUpDB.delete(RECORD_ID);
-		mCursor.requery();
+		//mCursor.requery();
 		Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
 	}
+
+	public void update_status(String status) {
+		if (RECORD_ID == 0) {
+			return;
+		}
+		TimiUpDB.update_status(RECORD_ID,status);
+		//mCursor.requery();
+		Toast.makeText(this, "更新成功", Toast.LENGTH_SHORT).show();
+	}
+
 
 
 	public String transStatus(String status){

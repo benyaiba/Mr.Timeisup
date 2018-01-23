@@ -288,5 +288,16 @@ public class TimiUpDB extends SQLiteOpenHelper {
         db.update(TABLE_NAME, cv, where, whereValue);
     }
 
+    public void update_status(int id, String status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = RECORD_ID + " = ?";
+        String[] whereValue = { Integer.toString(id) };
+        ContentValues cv = new ContentValues();
+        cv.put(STATUS, status);
+        db.update(TABLE_NAME, cv, where, whereValue);
+    }
+
+
+
 
 }
