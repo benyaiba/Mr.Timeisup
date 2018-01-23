@@ -45,7 +45,7 @@ public class SpecialAdapter extends SimpleAdapter {
         if("0".equals(t_status_tmp)){//未使用
 
             if(Integer.valueOf(t_hp_tmp) >= 50){
-                t_hp.setTextColor(Color.parseColor("#006400"));//<color name="darkgreen">#006400</color><!--暗绿色 -->
+                t_hp.setTextColor(Color.parseColor("#006400"));//绿
                 t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
 
                 t_good_name.setTextColor(Color.parseColor("#000000"));
@@ -55,8 +55,8 @@ public class SpecialAdapter extends SimpleAdapter {
                 t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_status.setText("√");
-            } else if(Integer.valueOf(t_hp_tmp) >25 && Integer.valueOf(t_hp_tmp) <50 ){
-                t_hp.setTextColor(Color.parseColor("#D2691E"));//<color name="chocolate">#D2691E</color><!--巧可力色 -->
+            } else if(Integer.valueOf(t_hp_tmp) > 25 && Integer.valueOf(t_hp_tmp) <50 ){
+                t_hp.setTextColor(Color.parseColor("#D2691E"));//黄
                 t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
 
                 t_good_name.setTextColor(Color.parseColor("#000000"));
@@ -66,18 +66,30 @@ public class SpecialAdapter extends SimpleAdapter {
                 t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_status.setText("√");
-            } else if(Integer.valueOf(t_hp_tmp) <= 25){
-                t_hp.setTextColor(Color.parseColor("#DC143C"));//<color name="crimson">#DC143C</color><!--暗深红色 -->
+            } else if(Integer.valueOf(t_hp_tmp) > 0 && Integer.valueOf(t_hp_tmp) <= 25){
+                t_hp.setTextColor(Color.parseColor("#DC143C"));//红
                 t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 //view.setBackgroundColor(Color.parseColor("#F4A460"));//<color name="sandybrown">#F4A460</color><!--沙褐色 -->
 
-                t_good_name.setTextColor(Color.parseColor("#DC143C"));//<color name="crimson">#DC143C</color><!--暗深红色 -->
-                t_lave_days.setTextColor(Color.parseColor("#DC143C"));//<color name="crimson">#DC143C</color><!--暗深红色 -->
-                t_end_date.setTextColor(Color.parseColor("#DC143C"));//<color name="crimson">#DC143C</color><!--暗深红色 -->
+                t_good_name.setTextColor(Color.parseColor("#DC143C"));
+                t_lave_days.setTextColor(Color.parseColor("#DC143C"));
+                t_end_date.setTextColor(Color.parseColor("#DC143C"));
                 t_good_name.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 t_status.setText("√");
+            } else if(Integer.valueOf(t_hp_tmp) <= 0){
+                t_hp.setTextColor(Color.parseColor("#000080"));//紫
+                t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                //view.setBackgroundColor(Color.parseColor("#F4A460"));//<color name="sandybrown">#F4A460</color><!--沙褐色 -->
+
+                t_good_name.setTextColor(Color.parseColor("#000080"));
+                t_lave_days.setTextColor(Color.parseColor("#000080"));
+                t_end_date.setTextColor(Color.parseColor("#000080"));
+                t_good_name.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                t_status.setText("X");
             }
 
         } else {

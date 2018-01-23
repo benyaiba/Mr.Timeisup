@@ -154,4 +154,10 @@
     <color name="content_background">#D0D0D0</color>
     <color name="content_color">#000000</color>
     <color name="selector_background">#DAA520</color>
+
+    <color name="alert_01">#5FC052</color>
+    <color name="alert_02">#FEC50F</color>
+    <color name="alert_03">#EE2428</color>
+    <color name="alert_04">#843C9F</color>
+    <color name="alert_05">#405DAD</color>
 </resources>

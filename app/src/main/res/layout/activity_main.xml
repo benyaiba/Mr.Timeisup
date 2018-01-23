@@ -19,7 +19,7 @@
 
         <EditText
             android:id="@+id/searchInput"
-            android:layout_width="210dp"
+            android:layout_width="220dp"
             android:layout_height="50dp"
             android:hint="@string/record_list_search" />
 

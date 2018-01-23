@@ -175,7 +175,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             try {
                 double dhp = 0;
                 if( "0".equals(laveDays)){
-                    hp = "-";
+                    hp = "0";
                 } else {
                     dhp = laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))*100;
                     hp = Double.toString(dhp).split("\\.")[0];
