@@ -14,107 +14,192 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="58dp"
-        android:padding="5dp">
+        android:layout_height="45dp"
+        android:padding="2dp">
 
         <EditText
             android:id="@+id/searchInput"
-            android:layout_width="210dp"
-            android:layout_height="50dp"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
             android:hint="@string/record_list_search" />
 
         <Button
             android:id="@+id/go_add"
             android:layout_width="120dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:textSize="17dp"
             android:background="@drawable/btn_nor_down_green"
             android:text="添加记录" />
+
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="40dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="17dp">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="17dp"-->
+                    <!--android:text="50+"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:paddingRight="2dp"-->
+                    <!--android:layout_marginLeft="1dp"-->
+                    <!--android:layout_marginBottom="2dp"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="5dp"-->
+                    <!--android:layout_height="5dp"-->
+                    <!--android:background="@color/darkgreen"/>-->
+
+
+                <!--<TextView-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="17dp"-->
+                    <!--android:text="50-25"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:paddingRight="2dp"-->
+                    <!--android:layout_marginLeft="1dp"-->
+                    <!--android:layout_marginBottom="2dp"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="5dp"-->
+                    <!--android:layout_height="5dp"-->
+                    <!--android:background="@color/chocolate"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="17dp">-->
+                <!--<TextView-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="17dp"-->
+                    <!--android:text="25-0"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:paddingRight="2dp"-->
+                    <!--android:layout_marginLeft="1dp"-->
+                    <!--android:layout_marginBottom="2dp"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="5dp"-->
+                    <!--android:layout_height="5dp"-->
+                    <!--android:background="@color/crimson"/>-->
+
+
+
+                <!--<TextView-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="17dp"-->
+                    <!--android:text="0-"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:paddingRight="3dp"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginBottom="1dp"/>-->
+                <!--<TextView-->
+                    <!--android:layout_width="5dp"-->
+                    <!--android:layout_height="5dp"-->
+                    <!--android:background="@color/navy"/>-->
+            <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
+
+
+
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="17dp">
-        <TextView
-            android:id="@+id/totalCount"
-            android:layout_width="210dp"
-            android:layout_height="15dp"
-            android:text="记录数"
-            android:textColor="@color/gray"
-            android:textSize="12sp"
-            android:layout_marginLeft="12dp"/>
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="17dp">-->
+        <!--<TextView-->
+            <!--android:id="@+id/totalCount"-->
+            <!--android:layout_width="210dp"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:text="记录数"-->
+            <!--android:textColor="@color/gray"-->
+            <!--android:textSize="12sp"-->
+            <!--android:layout_marginLeft="12dp"/>-->
 
-        <TextView
-            android:layout_width="25dp"
-            android:layout_height="17dp"
-            android:text="50+"
-            android:textSize="10sp"
-            android:gravity="right"
-            android:textColor="@color/gray"
-            android:paddingRight="2dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"/>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@color/darkgreen"/>
-
-
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="17dp"
-            android:text="50-25"
-            android:textSize="10sp"
-            android:gravity="right"
-            android:textColor="@color/gray"
-            android:paddingRight="2dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"/>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@color/chocolate"/>
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="25dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="50+"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/gray"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingRight="2dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginBottom="2dp"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/darkgreen"/>&ndash;&gt;-->
 
 
-
-        <TextView
-            android:layout_width="25dp"
-            android:layout_height="17dp"
-            android:text="25-0"
-            android:textSize="10sp"
-            android:gravity="right"
-            android:textColor="@color/gray"
-            android:paddingRight="2dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"/>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@color/crimson"/>
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="30dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="50-25"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/gray"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingRight="2dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginBottom="2dp"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/chocolate"/>&ndash;&gt;-->
 
 
 
-        <TextView
-            android:layout_width="15dp"
-            android:layout_height="17dp"
-            android:text="0-"
-            android:textSize="10sp"
-            android:gravity="right"
-            android:textColor="@color/gray"
-            android:paddingRight="3dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="2dp"/>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@color/navy"/>
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="25dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="25-0"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/gray"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingRight="2dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginBottom="2dp"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/crimson"/>&ndash;&gt;-->
+
+
+
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="15dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="17dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="0-"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="10sp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="right"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/gray"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingRight="3dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginBottom="2dp"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/navy"/>&ndash;&gt;-->
 
 
 
 
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 
 

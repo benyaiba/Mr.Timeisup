@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -152,10 +155,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 //            }
         }
 
-        //将查找到的记录数显示到检索框下面
-        TotalCount = (TextView) findViewById(R.id.totalCount);
-        TotalCount.setText("物品：x".replace("x", lCount.toString()));
-
+        //将查找到的记录数显示到检索框里面 以hint形式。节省空间
+//        TotalCount = (TextView) findViewById(R.id.totalCount);
+//        TotalCount.setText("物品：x".replace("x", lCount.toString()));
+        SearchInput = (EditText)findViewById(R.id.searchInput);
+        SpannableString s = new SpannableString("本仓库总件数：x".replace("x", lCount.toString()));
+        AbsoluteSizeSpan textSize = new AbsoluteSizeSpan(12,true);
+        s.setSpan(textSize,0,s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SearchInput.setHint(s);
 
         RecordList = (ListView)findViewById(R.id.recordslist);
 
