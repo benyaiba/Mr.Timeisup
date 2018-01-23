@@ -59,6 +59,15 @@ public class TimiUpDB extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public long getAllCount(String orderBy){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME + " order by " + orderBy, null);
+        if (cursor.moveToNext()) {
+            return cursor.getLong(0);
+        }
+        return 0;
+    }
+
     public Cursor getLimit90(String orderBy) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(true,TABLE_NAME, null, null, null, null, null, orderBy,"0,90");
@@ -200,6 +209,15 @@ public class TimiUpDB extends SQLiteOpenHelper {
                 new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
                 where , null, null, null, orderby, null);
         return cursor;
+    }
+
+    public long getForSearchCount(String good_name_or_remark) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME + " where " + GOOD_NAME + " LIKE '%" + good_name_or_remark + "%' or "  + REMARK + " LIKE '%" + good_name_or_remark + "%' ", null);
+        if (cursor.moveToNext()) {
+            return cursor.getLong(0);
+        }
+        return 0;
     }
 
     public Cursor getAllGoodName() {

@@ -46,7 +46,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     private Cursor mCursor;
     private ListView RecordList;
     private EditText SearchInput;
+    private TextView TotalCount;
 
+    private Long lCount;
     private UpdateTask updateTask;
 
     private int RECORD_ID = 0;
@@ -125,6 +127,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         TimiUpDB = new TimiUpDB(this);
         if("listInit".equals(type)){
             mCursor = TimiUpDB.getAll("id desc");
+            lCount = TimiUpDB.getAllCount("id desc");
         } else if("search".equals(type)) {
 
 //            bn_filters = (Button)findViewById(R.id.filters);
@@ -137,6 +140,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 //            }
 
             mCursor = TimiUpDB.getForSearchName(value);
+            lCount = TimiUpDB.getForSearchCount(value);
 
         } else if("filter".equals(type)){
 //            spinner_filter_create_time = (Spinner)findViewById(R.id.filter_create_time);
@@ -147,6 +151,11 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
 //                mCursor = TimiUpDB.getForSearch(value,spinner_filter_create_time.getSelectedItem().toString(),spinner_filter_eat_time.getSelectedItem().toString());
 //            }
         }
+
+        //将查找到的记录数显示到检索框下面
+        TotalCount = (TextView) findViewById(R.id.totalCount);
+        TotalCount.setText("物品：x".replace("x", lCount.toString()));
+
 
         RecordList = (ListView)findViewById(R.id.recordslist);
 

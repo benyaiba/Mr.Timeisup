@@ -55,7 +55,7 @@ public class SpecialAdapter extends SimpleAdapter {
                 t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_status.setText("√");
-            } else if(Integer.valueOf(t_hp_tmp) > 25 && Integer.valueOf(t_hp_tmp) <50 ){
+            } else if(Integer.valueOf(t_hp_tmp) >= 25 && Integer.valueOf(t_hp_tmp) < 50 ){
                 t_hp.setTextColor(Color.parseColor("#D2691E"));//黄
                 t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
 
@@ -66,7 +66,7 @@ public class SpecialAdapter extends SimpleAdapter {
                 t_lave_days.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_end_date.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 t_status.setText("√");
-            } else if(Integer.valueOf(t_hp_tmp) > 0 && Integer.valueOf(t_hp_tmp) <= 25){
+            } else if(Integer.valueOf(t_hp_tmp) > 0 && Integer.valueOf(t_hp_tmp) < 25){
                 t_hp.setTextColor(Color.parseColor("#DC143C"));//红
                 t_hp.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 //view.setBackgroundColor(Color.parseColor("#F4A460"));//<color name="sandybrown">#F4A460</color><!--沙褐色 -->

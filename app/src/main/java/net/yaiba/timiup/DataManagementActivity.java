@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import net.yaiba.timiup.db.TimiUpDB;
 
@@ -43,6 +44,9 @@ public class DataManagementActivity extends Activity {
 	private String FILE_DIR_NAME = "timiup";
 	private String fileNameSuff = ".xml";
 
+	private TextView TotalCount;
+	private Long lCount;
+
 	//检测是否有写的权限用
 	private static final int REQUEST_EXTERNAL_STORAGE = 1;
 	private static String[] PERMISSIONS_STORAGE = {
@@ -60,6 +64,8 @@ public class DataManagementActivity extends Activity {
 		verifyStoragePermissions(DataManagementActivity.this);
 
 
+
+
 		//判断文件名中是否包含20170216020803!!!!!.xml 这种文件，如果目录中包含这种文件，将在画面最下方以红色文字提示。
 		List<String> bakupFileList = new ArrayList<String>();
 		String keepPath = Environment.getExternalStorageDirectory().toString()  + "//" +FILE_DIR_NAME;
@@ -67,6 +73,9 @@ public class DataManagementActivity extends Activity {
 
 		setContentView(R.layout.data_management);
 
+		lCount = TimiUpDB.getAllCount("id asc");
+		TotalCount = (TextView) findViewById(R.id.redordCount);
+		TotalCount.setText("可备份记录数：x".replace("x", lCount.toString()));
 
 		
 		Button bn_data_bakup = (Button)findViewById(R.id.data_bakup);
