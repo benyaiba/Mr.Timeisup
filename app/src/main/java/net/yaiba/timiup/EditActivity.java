@@ -302,14 +302,6 @@ public class EditActivity extends Activity {
 			Toast.makeText(this, "[名称]不能超过100个文字", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (productdate.equals("")){
-			Toast.makeText(this, "[生产日期]没填", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (!isValidDate(productdate)){
-			Toast.makeText(this, "[生产日期]无效", Toast.LENGTH_SHORT).show();
-			return false;
-		}
 
 		if (enddate.equals("")){
 			Toast.makeText(this, "[到期日]没填", Toast.LENGTH_SHORT).show();
@@ -332,6 +324,15 @@ public class EditActivity extends Activity {
 		if (!isValidDate(buydate)){
 			Toast.makeText(this, "[购买日期]无效", Toast.LENGTH_SHORT).show();
 			return false;
+		}
+
+		if (!productdate.equals("")){
+			if(!isValidDate(productdate)){
+				Toast.makeText(this, "[生产日期]无效", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		} else {
+			productdate = buydate;//为了解决进口商品只有保质期截止日的情况,将 购买日期设置成生产日期
 		}
 
 		if (remark.length() >200){
