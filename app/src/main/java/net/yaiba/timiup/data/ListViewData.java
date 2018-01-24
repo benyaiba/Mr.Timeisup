@@ -14,6 +14,8 @@ public class ListViewData extends Application{
     //用于保存当前快速查找文本框中的文字内容
     private String quickSearchText;
 
+    private String spinner_data_no;
+    private String spinner_data_unit;
 
     public int getFirstVisiblePosition(){
         return this.firstVisiblePosition;
@@ -32,9 +34,23 @@ public class ListViewData extends Application{
     public String getQuickSearchText() {
         return this.quickSearchText;
     }
-
     public void setQuickSearchText(String s){
         this.quickSearchText = s;
+    }
+
+
+    public  String getSpinner_data_no(){
+        return this.spinner_data_no;
+    }
+    public  void setSpinner_data_no(String s){
+        this.spinner_data_no = s;
+    }
+
+    public  String getSpinner_data_unit(){
+        return this.spinner_data_unit;
+    }
+    public  void setSpinner_data_unit(String s){
+        this.spinner_data_unit = s;
     }
 
     @Override
@@ -42,6 +58,8 @@ public class ListViewData extends Application{
         firstVisiblePosition = 0;
         firstVisiblePositionTop = 0;
         quickSearchText = "";
+        spinner_data_no = "";
+        spinner_data_unit ="";
         super.onCreate();
     }
 

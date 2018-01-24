@@ -10,8 +10,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,7 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.yaiba.timiup.data.ListViewData;
 import net.yaiba.timiup.db.TimiUpDB;
+import net.yaiba.timiup.utils.OnSpinnerItemClicked;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -33,7 +37,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static net.yaiba.timiup.utils.Custom.getDateAddYearMonthWeekDate;
 import static net.yaiba.timiup.utils.Custom.isValidDate;
+import static net.yaiba.timiup.utils.Custom.setSpinnerItemSelectedByValue;
+import static net.yaiba.timiup.utils.Custom.transSinnerUnitCH2EN;
 
 
 public class EditActivity extends Activity {
@@ -122,7 +129,97 @@ public class EditActivity extends Activity {
 		});
 
 
+		Button bn_bn_by_monthorweek = (Button)findViewById(R.id.bn_by_monthorweek);
+		bn_bn_by_monthorweek.setOnClickListener(new View.OnClickListener(){
+			public void  onClick(View v)
+			{
 
+				LayoutInflater li = LayoutInflater.from(EditActivity.this);
+
+				View promptsView = li.inflate(R.layout.spinner_month_week, null);
+
+				AlertDialog.Builder builder= new AlertDialog.Builder(EditActivity.this);
+
+				builder.setView(promptsView);
+
+				final AlertDialog alertDialog = builder.create();
+
+				final Spinner mSpinner_no= (Spinner) promptsView.findViewById(R.id.spinner_no);
+				final Spinner mSpinner_unit = (Spinner) promptsView	.findViewById(R.id.spinner_unit);
+
+				//数字下拉列表监听器
+				mSpinner_no.setOnItemSelectedListener(new OnSpinnerItemClicked(){
+
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+						final ListViewData app = (ListViewData)getApplication();
+						app.setSpinner_data_no(parent.getItemAtPosition(pos).toString());
+
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView parent) {
+						// Do nothing.
+					}
+				});
+				//单位下拉列表监听器
+				mSpinner_unit.setOnItemSelectedListener(new OnSpinnerItemClicked(){
+
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+						final ListViewData app = (ListViewData)getApplication();
+						app.setSpinner_data_unit(parent.getItemAtPosition(pos).toString());
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView parent) {
+						// Do nothing.
+					}
+				});
+				//mSpinner_unit.setSelection(1,true);//第一个是0
+
+				//当前画面如果选择了，就保值一下，当前画面没有刷新时再次点击按钮，内容需要保值。
+				final ListViewData app = (ListViewData)getApplication();
+				setSpinnerItemSelectedByValue(mSpinner_no,app.getSpinner_data_no());
+				setSpinnerItemSelectedByValue(mSpinner_unit,app.getSpinner_data_unit());
+
+				builder.setIcon(android.R.drawable.ic_dialog_info);
+				builder.setTitle("选择");
+				builder.setMessage("选择年、月或周数，程序会自动计算商品的到期日");
+				builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+//						update_status("1");
+//						Intent mainIntent = new Intent(DetailActivity.this,MainActivity.class);
+//						startActivity(mainIntent);
+//						setResult(RESULT_OK, mainIntent);
+//						finish();
+						final ListViewData app = (ListViewData) getApplication();
+						Log.v("v_debug_ss", app.getSpinner_data_no() + "//" + app.getSpinner_data_unit());
+
+
+						if (!ProductDate.getText().toString().isEmpty() && isValidDate(ProductDate.getText().toString())) {
+
+							String uniten = transSinnerUnitCH2EN(app.getSpinner_data_unit());
+							//根据选择的数字和单位，计算到期日期
+							String newEndDate = getDateAddYearMonthWeekDate(ProductDate.getText().toString(),app.getSpinner_data_no(),uniten);
+
+							EndDate = (EditText) findViewById(R.id.end_date);
+							EndDate.setText(newEndDate);
+
+						} else {
+							Toast.makeText(EditActivity.this, "没有有效生产日期，到期日期无法计算", Toast.LENGTH_LONG).show();
+
+						}
+
+
+					}
+				}).setNegativeButton("取消", null);
+				builder.create().show();
+
+
+
+			}
+		});
 
 
 	}
@@ -263,6 +360,10 @@ public class EditActivity extends Activity {
 		StatusGroup = (RadioGroup) findViewById(R.id.ra_status_group);
 
 		Remark = (EditText)findViewById(R.id.remark);
+
+		final ListViewData app = (ListViewData)getApplication();
+		app.setSpinner_data_no("12");
+		app.setSpinner_data_unit("月");
 
 
 		GoodName.setText(mCursor.getString(mCursor.getColumnIndex("good_name")));

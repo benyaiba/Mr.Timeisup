@@ -3,6 +3,8 @@ package net.yaiba.timiup.utils;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import net.yaiba.timiup.R;
 
@@ -350,6 +352,41 @@ public class Custom {
     }
 
 
+    //获取某日日期增加年月日周之后的日期
+    public static String getDateAddYearMonthWeekDate(String initDate ,String no, String nuit) {
+
+        Calendar c = Calendar.getInstance();//获得一个日历的实例
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+
+        try{
+            date = sdf.parse(initDate);//初始日期"2016-12-23"
+        }catch(Exception e){
+        }
+
+        c.setTime(date);//设置日历时间
+
+        switch(nuit){
+            case "year":
+                c.add(Calendar.YEAR,Integer.valueOf(no));
+                break;
+            case "month":
+                c.add(Calendar.MONTH,Integer.valueOf(no));
+                break;
+            case "week":
+                c.add(Calendar.DATE,Integer.valueOf(no) * 7);
+                break;
+            case "day":
+                c.add(Calendar.DATE,Integer.valueOf(no) );
+                break;
+            default:
+                break;
+        }
+
+        return sdf.format(c.getTime());
+    }
+
+
     public static String getDateToString(Date date){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
@@ -376,6 +413,45 @@ public class Custom {
             convertSuccess=false;
         }
         return convertSuccess;
+    }
+
+    /**
+     * 根据值, 设置spinner默认选中:
+     * @param spinner
+     * @param value
+     */
+    public static void setSpinnerItemSelectedByValue(Spinner spinner, String value){
+
+        SpinnerAdapter apsAdapter= spinner.getAdapter(); //得到SpinnerAdapter对象
+        int k= apsAdapter.getCount();
+        for(int i=0;i<k;i++){
+            if(value.equals(apsAdapter.getItem(i).toString())){
+                spinner.setSelection(i,true);// 默认选中项
+                break;
+            }
+        }
+    }
+
+    public static String transSinnerUnitCH2EN(String s){
+        String b = "";
+        switch(s){
+            case "年":
+                b = "year";
+                break;
+            case "月":
+                b = "month";
+                break;
+            case "周":
+                b = "week";
+                break;
+            case "日":
+                b = "day";
+                break;
+            default:
+                b = "";
+                break;
+        }
+        return  b;
     }
 
 }
