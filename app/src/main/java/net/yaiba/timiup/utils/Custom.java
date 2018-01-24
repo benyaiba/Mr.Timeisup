@@ -225,6 +225,19 @@ public class Custom {
         gc.setTime(date);
         return gc.get(Calendar.MONTH) + 1;
     }
+    //获取当天日期，含时间
+    public static String getNowDateWithTimes(){
+        Date day=new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return  df.format(day);
+    }
+    //获取当天日期
+    public static String getNowDate(){
+        Date day=new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return  df.format(day);
+    }
+
     //两个日期相减得到的天数
     public static int getDiffDays(Date beginDate, Date endDate) {
 

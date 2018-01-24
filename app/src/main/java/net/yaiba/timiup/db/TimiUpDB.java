@@ -11,6 +11,9 @@ import net.yaiba.timiup.utils.Custom;
 
 import java.util.Date;
 
+import static net.yaiba.timiup.utils.Custom.getDateAddYearMonthWeekDate;
+import static net.yaiba.timiup.utils.Custom.getNowDate;
+
 
 public class TimiUpDB extends SQLiteOpenHelper {
 
@@ -55,6 +58,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
 
     public Cursor getAll(String orderBy) {
         SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, orderBy);
         return cursor;
     }

@@ -178,6 +178,21 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             String status = mCursor.getString(mCursor.getColumnIndex("status"));
             Log.v("v_record"+id,id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status);
 
+            //若果到日期+6个月，还在当前日期之前，，也就是说 ，到期日在六个月以前，，，并且 status=1，就是说已经使用了，这样的灰色数据不需要显示了，，只针对初期化列表，检索时候这类数据可以呗检索出来
+//            if ("listInit".equals(type)){
+//                try {
+//
+//                    if(getStringToDate(getDateAddYearMonthWeekDate(endDate,"6","month")).before(getStringToDate(getNowDate()))  ){
+//                        if("1".equals(status)){
+//                            continue;
+//                        }
+//                    }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+
+
             String  laveDays = "0";//剩余天数，， _剩余天数=今日-到期日 的天数
             double laveDaysDoub = 0;
             try {

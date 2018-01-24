@@ -378,7 +378,7 @@ public class EditActivity extends Activity {
 		} else {
 			StatusGroup.check(R.id.ra_used);
 		}
-
+		statusValue  =status;
 		Remark.setText(mCursor.getString(mCursor.getColumnIndex("remark")));
 
 
