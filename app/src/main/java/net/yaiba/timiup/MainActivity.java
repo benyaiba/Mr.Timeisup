@@ -131,14 +131,14 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             @Override
             public void onClick(View arg0) {
                 if("id desc".equals(app.getMainListSortType())){
-                    setUpViews("listInit","hp desc");
-                    HpTag.setText("♥");
-                    app.setMainListSortType("hp desc");
-                } else if("hp desc".equals(app.getMainListSortType())){
                     setUpViews("listInit","hp asc");
                     HpTag.setText("♡");
                     app.setMainListSortType("hp asc");
                 } else if("hp asc".equals(app.getMainListSortType())){
+                    setUpViews("listInit","hp desc");
+                    HpTag.setText("♥");
+                    app.setMainListSortType("hp desc");
+                } else if("hp desc".equals(app.getMainListSortType())){
                     setUpViews("listInit","id desc");
                     HpTag.setText("");
                     app.setMainListSortType("id desc");
