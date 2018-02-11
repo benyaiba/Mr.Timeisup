@@ -50,6 +50,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     private ListView RecordList;
     private EditText SearchInput;
     private TextView TotalCount;
+    private TextView HP;
+    private TextView HpTag;
 
     private Long lCount;
     private UpdateTask updateTask;
@@ -64,7 +66,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         // 当迁移当前页面时，判断检索框中是否有内容，如果有，恢复检索时下拉列表中的内容，并设置检索框中的文字。
         final ListViewData app = (ListViewData)getApplication();
         if("".equals(app.getQuickSearchText())){
-            setUpViews("listInit",null);
+            setUpViews("listInit",app.getMainListSortType());
         } else {
             SearchInput = (EditText)findViewById(R.id.searchInput);
             SearchInput.setText(app.getQuickSearchText());
@@ -103,7 +105,7 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
                         e.printStackTrace();
                     }
                 } else {
-                    setUpViews("listInit",null);
+                    setUpViews("listInit","id desc");
                     app.setQuickSearchText("");
                 }
             }
@@ -121,6 +123,30 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         });
 
 
+
+        // hp设定监听器
+        HP = (TextView)findViewById(R.id.hp);
+        HpTag = (TextView)findViewById(R.id.hp_tag);
+        HP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if("id desc".equals(app.getMainListSortType())){
+                    setUpViews("listInit","hp desc");
+                    HpTag.setText("♥");
+                    app.setMainListSortType("hp desc");
+                } else if("hp desc".equals(app.getMainListSortType())){
+                    setUpViews("listInit","hp asc");
+                    HpTag.setText("♡");
+                    app.setMainListSortType("hp asc");
+                } else if("hp asc".equals(app.getMainListSortType())){
+                    setUpViews("listInit","id desc");
+                    HpTag.setText("");
+                    app.setMainListSortType("id desc");
+                }
+
+            }
+        });
+
     }
 
 
@@ -129,8 +155,8 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
     public void setUpViews(String type, String value){
         TimiUpDB = new TimiUpDB(this);
         if("listInit".equals(type)){
-            mCursor = TimiUpDB.getAll("id desc");
-            lCount = TimiUpDB.getAllCount("id desc");
+            mCursor = TimiUpDB.getAll(value);
+            lCount = TimiUpDB.getAllCount(value);
         } else if("search".equals(type)) {
 
 //            bn_filters = (Button)findViewById(R.id.filters);
@@ -176,7 +202,9 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
             String endDate = mCursor.getString(mCursor.getColumnIndex("end_date"));
             String buyDate = mCursor.getString(mCursor.getColumnIndex("buy_date"));
             String status = mCursor.getString(mCursor.getColumnIndex("status"));
-            Log.v("v_record"+id,id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status);
+            String hp_db = mCursor.getString(mCursor.getColumnIndex("hp"));
+
+            Log.v("v_record"+id,id+"/"+goodName+"/"+productDate+"/"+endDate+"/"+buyDate+"/"+status+"/"+hp_db);
 
             //若果到日期+6个月，还在当前日期之前，，也就是说 ，到期日在六个月以前，，，并且 status=1，就是说已经使用了，这样的灰色数据不需要显示了，，只针对初期化列表，检索时候这类数据可以呗检索出来
 //            if ("listInit".equals(type)){
@@ -202,31 +230,30 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
                 e.printStackTrace();
             }
 
-            String hp = "";//HP,表示商品的生命周期百分比，， _HP =（剩余天数/（生产日期~到期日的天数））x100
-            try {
-                double dhp = 0;
-                if( "0".equals(laveDays)){
-                    hp = "0";
-                } else {
-                    dhp = laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))*100;
-                    hp = Double.toString(dhp).split("\\.")[0];
-                }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            String hp = "";//HP,表示商品的生命周期百分比，， _HP =（剩余天数/（生产日期~到期日的天数））x100----在数据库中设置了hp字段的计算，所以取消了手动计算hp的部分。
+//            try {
+//                double dhp = 0;
+//                if( "0".equals(laveDays)){
+//                    hp = "0";
+//                } else {
+//                    dhp = laveDaysDoub/getDiffDays(getStringToDate(productDate),getStringToDate(endDate))*100;
+//                    hp = Double.toString(dhp).split("\\.")[0];
+//                }
+//
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("id", id);
             map.put("goodName", goodName);
             map.put("laveDays", laveDays+"天");
             map.put("endDate", endDate);
-            map.put("HP", hp+"%");
+            map.put("HP", hp_db+"%");
             map.put("status", status);
-
-
             map.put("productDate", productDate);
             map.put("buyDate", buyDate);
+
 
 
             listItem.add(map);

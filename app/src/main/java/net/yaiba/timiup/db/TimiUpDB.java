@@ -27,6 +27,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
     public final static String BUY_DATE = "buy_date";//购买日期
     public final static String STATUS = "status";//状态，0未使用1已使用
     public final static String REMARK = "remark";//备注
+    public final static String HP = "round((julianday(strftime('%Y-%m-%d', end_date )) - julianday(strftime('%Y-%m-%d',datetime('now','localtime'))) )/    ( julianday(strftime('%Y-%m-%d',end_date)) - julianday(strftime('%Y-%m-%d',product_date)) )    * 100 , 0) as hp "; //剩余天数/全部天数   x100
 
     public TimiUpDB(Context context) {
         // TODO Auto-generated constructor stub
@@ -59,13 +60,19 @@ public class TimiUpDB extends SQLiteOpenHelper {
     public Cursor getAll(String orderBy) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, orderBy);
+//        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, orderBy);
+//        return cursor;
+        Cursor cursor = db.query(true,
+                TABLE_NAME,
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK, HP},
+                null , null, null, null, orderBy, null);
         return cursor;
+
     }
 
     public long getAllCount(String orderBy){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME + " order by " + orderBy, null);
+        Cursor cursor = db.rawQuery("select count(*) from " + TABLE_NAME , null);
         if (cursor.moveToNext()) {
             return cursor.getLong(0);
         }
@@ -227,6 +234,26 @@ public class TimiUpDB extends SQLiteOpenHelper {
     public Cursor getAllGoodName() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(false,TABLE_NAME, new String[] {GOOD_NAME}, null, null, null, null, null ,null);
+        return cursor;
+    }
+
+    public Cursor getForSort(String good_name_or_remark) {
+        String where = "";
+        String sql_namemark ="";
+
+        where = "("+GOOD_NAME + " LIKE '%" + good_name_or_remark + "%' or "  + REMARK + " LIKE '%" + good_name_or_remark + "%' " + ")";
+
+        String where_2 = "(     (   DATEDIFF ("+ END_DATE + " , DATE_FORMAT(CURDATE(), 'yyyy-MM-dd')   )/    ( DATEDIFF ( "+ END_DATE + " , "+ PRODUCT_DATE + ")   )  * 100      )";
+        Log.v("v_debug",where_2);
+        String orderby = "id asc";
+
+        Log.v("debug",where);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(true,
+                TABLE_NAME,
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
+                where , null, null, null, orderby, null);
         return cursor;
     }
 

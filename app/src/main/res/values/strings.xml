@@ -40,9 +40,7 @@
     <string name="menu_warming_have_unencode_file">警告：检测到目录中包含未加密的备份文件\n为了安全起见请备份后删除</string>
 
     <string name="what_updated">
-        0.0.3.0\n优化一览显示，使用颜色提示生命周期\n\n
-        0.0.2.0\n录入、编辑、删除、检索、数据管理功能\n\n
-        0.0.1.0\n一览列表显示
+        点击“HP”可以排序\n
     </string>
     <string name="partners">\@石头大风吹</string>
     <string name="about_app">

@@ -17,6 +17,8 @@ public class ListViewData extends Application{
     private String spinner_data_no;
     private String spinner_data_unit;
 
+    private String mainListSortType;
+
     public int getFirstVisiblePosition(){
         return this.firstVisiblePosition;
     }
@@ -53,6 +55,13 @@ public class ListViewData extends Application{
         this.spinner_data_unit = s;
     }
 
+    public  String getMainListSortType(){
+        return this.mainListSortType;
+    }
+    public  void setMainListSortType(String s){
+        this.mainListSortType = s;
+    }
+
     @Override
     public void onCreate(){
         firstVisiblePosition = 0;
@@ -60,6 +69,7 @@ public class ListViewData extends Application{
         quickSearchText = "";
         spinner_data_no = "";
         spinner_data_unit ="";
+        mainListSortType = "id desc";
         super.onCreate();
     }
 

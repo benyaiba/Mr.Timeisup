@@ -255,6 +255,8 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/hp"
+                    android:clickable="true"
                     android:layout_width="45sp"
                     android:layout_height="wrap_content"
                     android:text="HP"
@@ -262,12 +264,15 @@
                     android:gravity="center"
                     android:textStyle="bold" />
 
+                <!-- 默认不显示       ♥HP从高到低     ♡ HP从低到高    -->
                 <TextView
-                    android:layout_width="10sp"
+                    android:id="@+id/hp_tag"
+                    android:layout_width="20sp"
                     android:layout_height="wrap_content"
-                    android:text="♥"
+                    android:text=""
                     android:textSize="8sp"
                     android:gravity="center"
+                    android:textColor="@color/alert_01"
                     android:textStyle="bold" />
 
                 <!--<TextView-->
