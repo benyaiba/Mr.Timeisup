@@ -108,7 +108,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
 
     public Cursor getRecordInfo(long rowId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(true, TABLE_NAME, new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE, BUY_DATE, STATUS, REMARK}, RECORD_ID + "=" + rowId, null, null, null, null, null);
+        Cursor cursor = db.query(true, TABLE_NAME, new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE, BUY_DATE, STATUS, REMARK, HP}, RECORD_ID + "=" + rowId, null, null, null, null, null);
         if(cursor != null) {
             cursor.moveToFirst();
         }
@@ -195,7 +195,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(true,
                 TABLE_NAME,
-                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK, HP},
                 where , null, null, null, orderby, null);
         return cursor;
     }
@@ -217,7 +217,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(true,
                 TABLE_NAME,
-                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK, HP},
                 where , null, null, null, orderby, null);
         return cursor;
     }
@@ -252,7 +252,7 @@ public class TimiUpDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(true,
                 TABLE_NAME,
-                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK},
+                new String[] {RECORD_ID, GOOD_NAME, PRODUCT_DATE, END_DATE,BUY_DATE, STATUS, REMARK, HP},
                 where , null, null, null, orderby, null);
         return cursor;
     }
