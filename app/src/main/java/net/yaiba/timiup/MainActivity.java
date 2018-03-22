@@ -12,6 +12,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.yaiba.timiup.data.ListViewData;
 import net.yaiba.timiup.db.TimiUpDB;
@@ -33,6 +35,8 @@ import net.yaiba.timiup.utils.UpdateTask;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static net.yaiba.timiup.utils.Custom.*;
 
@@ -433,6 +437,35 @@ public class MainActivity extends Activity implements  AdapterView.OnItemClickLi
         app.setFirstVisiblePosition(RecordList.getFirstVisiblePosition());
         View item = RecordList.getChildAt(0);
         app.setFirstVisiblePositionTop((item == null) ? 0 : item.getTop());
+    }
+
+    private static Boolean isExit = false;
+    private static Boolean hasTask = false;
+    Timer tExit = new Timer();
+    TimerTask task = new TimerTask(){
+
+        @Override
+        public void run() {
+            isExit = true;
+            hasTask = true;
+        }
+    };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(isExit == false ) {
+                isExit = true;
+                Toast.makeText(this, "再按一次后退键退出应用程序", Toast.LENGTH_SHORT).show();
+                if(!hasTask) {
+                    tExit.schedule(task, 2000);
+                }
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return false;
     }
 
 }

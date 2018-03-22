@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Mr.Timiup</string>
 
+    <string name="login_title">物品保质期管理手册</string>
 
     <string name="info_mingcheng">名称</string>
     <string name="info_shengchanriqi">生产日</string>
