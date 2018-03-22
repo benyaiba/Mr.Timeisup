@@ -15,7 +15,7 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="net.yaiba.timiup.MainActivity">
+        <activity android:name="net.yaiba.timiup.MainActivity"  android:label="Mr.Timiup 物品保质期管理手册" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
